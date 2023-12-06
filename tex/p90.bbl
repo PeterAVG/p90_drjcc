@@ -1,0 +1,147 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{energinet}{article}{}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Energinet}
+      \field{note}{Accessed: 2023-11-24}
+      \field{title}{Energinet: Prequalification and Test}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://en.energinet.dk/electricity/ancillary-services/prequalification-and-test/
+      \endverb
+      \verb{url}
+      \verb https://en.energinet.dk/electricity/ancillary-services/prequalification-and-test/
+      \endverb
+    \endentry
+    \entry{jiang2022also}{article}{}
+      \name{author}{2}{}{%
+        {{hash=7468fad9969f4d0241aaf0ab47f42591}{%
+           family={Jiang},
+           familyi={J\bibinitperiod},
+           given={Nan},
+           giveni={N\bibinitperiod}}}%
+        {{hash=304e15714ce0c473635b8c4761b2689d}{%
+           family={Xie},
+           familyi={X\bibinitperiod},
+           given={Weijun},
+           giveni={W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {INFORMS}%
+      }
+      \strng{namehash}{19e22ae4f657ca11ace47378aa6ff7e6}
+      \strng{fullhash}{19e22ae4f657ca11ace47378aa6ff7e6}
+      \strng{bibnamehash}{19e22ae4f657ca11ace47378aa6ff7e6}
+      \strng{authorbibnamehash}{19e22ae4f657ca11ace47378aa6ff7e6}
+      \strng{authornamehash}{19e22ae4f657ca11ace47378aa6ff7e6}
+      \strng{authorfullhash}{19e22ae4f657ca11ace47378aa6ff7e6}
+      \field{extraname}{1}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Operations Research}
+      \field{number}{6}
+      \field{title}{ALSO-X and ALSO-X+: Better convex approximations for chance constrained programs}
+      \field{volume}{70}
+      \field{year}{2022}
+      \field{pages}{3581\bibrangedash 3600}
+      \range{pages}{20}
+    \endentry
+    \entry{jiang2023also}{article}{}
+      \name{author}{2}{}{%
+        {{hash=7468fad9969f4d0241aaf0ab47f42591}{%
+           family={Jiang},
+           familyi={J\bibinitperiod},
+           given={Nan},
+           giveni={N\bibinitperiod}}}%
+        {{hash=304e15714ce0c473635b8c4761b2689d}{%
+           family={Xie},
+           familyi={X\bibinitperiod},
+           given={Weijun},
+           giveni={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{19e22ae4f657ca11ace47378aa6ff7e6}
+      \strng{fullhash}{19e22ae4f657ca11ace47378aa6ff7e6}
+      \strng{bibnamehash}{19e22ae4f657ca11ace47378aa6ff7e6}
+      \strng{authorbibnamehash}{19e22ae4f657ca11ace47378aa6ff7e6}
+      \strng{authornamehash}{19e22ae4f657ca11ace47378aa6ff7e6}
+      \strng{authorfullhash}{19e22ae4f657ca11ace47378aa6ff7e6}
+      \field{extraname}{2}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv preprint arXiv:2302.01737}
+      \field{title}{ALSO-X\#: Better Convex Approximations for Distributionally Robust Chance Constrained Programs}
+      \field{year}{2023}
+    \endentry
+    \entry{ordoudis2021energy}{article}{}
+      \name{author}{4}{}{%
+        {{hash=c6f5805246a5aa1dc58181b0bf11a089}{%
+           family={Ordoudis},
+           familyi={O\bibinitperiod},
+           given={Christos},
+           giveni={C\bibinitperiod}}}%
+        {{hash=9441f006decbc6be7528ac8379a6eba7}{%
+           family={Nguyen},
+           familyi={N\bibinitperiod},
+           given={Viet\bibnamedelima Anh},
+           giveni={V\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=26016ea14a3620bdccc9b3365946677e}{%
+           family={Kuhn},
+           familyi={K\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod}}}%
+        {{hash=f868152a252ba8f399a537f3a95cf9f3}{%
+           family={Pinson},
+           familyi={P\bibinitperiod},
+           given={Pierre},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{f41ce1c13f4115bd85260f7c703ede6f}
+      \strng{fullhash}{69d69a20ae72b97cd3dbe77e81879fb5}
+      \strng{bibnamehash}{f41ce1c13f4115bd85260f7c703ede6f}
+      \strng{authorbibnamehash}{f41ce1c13f4115bd85260f7c703ede6f}
+      \strng{authornamehash}{f41ce1c13f4115bd85260f7c703ede6f}
+      \strng{authorfullhash}{69d69a20ae72b97cd3dbe77e81879fb5}
+      \field{sortinit}{O}
+      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Operations Research Letters}
+      \field{number}{3}
+      \field{title}{Energy and reserve dispatch with distributionally robust joint chance constraints}
+      \field{volume}{49}
+      \field{year}{2021}
+      \field{pages}{291\bibrangedash 299}
+      \range{pages}{9}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

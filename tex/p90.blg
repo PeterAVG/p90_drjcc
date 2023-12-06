@@ -1,0 +1,15 @@
+[0] Config.pm:306> INFO - This is Biber 2.18
+[0] Config.pm:309> INFO - Logfile is 'p90.blg'
+[86] biber-darwin:340> INFO - === Wed Nov 29, 2023, 12:46:55
+[106] Biber.pm:418> INFO - Reading 'p90.bcf'
+[228] Biber.pm:978> INFO - Found 4 citekeys in bib section 0
+[243] Biber.pm:4401> INFO - Processing section 0
+[255] Biber.pm:4592> INFO - Looking for bibtex file 'bibliography/Bibliography.bib' for section 0
+[257] bibtex.pm:1713> INFO - LaTeX decoding ...
+[263] bibtex.pm:1518> INFO - Found BibTeX data source 'bibliography/Bibliography.bib'
+[318] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[318] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[318] Biber.pm:4221> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
+[318] Biber.pm:4227> INFO - No sort tailoring available for locale 'en-US'
+[327] bbl.pm:654> INFO - Writing 'p90.bbl' with encoding 'UTF-8'
+[329] bbl.pm:757> INFO - Output to p90.bbl
