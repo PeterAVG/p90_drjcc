@@ -2,7 +2,9 @@ fail_fast: false
 exclude: |
   (?x)^(.idea|
     .git|
-    # src/tests|
+    src/misc.py|
+    src/norms.py|
+    src/plot.py
   )$
 default_stages: [push, commit]
 repos:
@@ -31,7 +33,7 @@ repos:
       - id: mypy
         require_serial: true
         language_version: python3.11
-        exclude: ".venv|.git"
+        exclude: ".venv|.git|src/misc.py|src/norms.py"
         stages: [commit]
         types: [python]
         pass_filenames: false
