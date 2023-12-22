@@ -1,12 +1,12 @@
 # Fdb version 3
-["biber p90"] 1701258404 "p90.bcf" "p90.bbl" "p90" 1701258424
-  "bibliography/Bibliography.bib" 1701258386 1154 8fd3619f7a0a711313f3a134adf37db6 ""
-  "p90.bcf" 1701258423 107477 6a2bcd9a6e9486bcd3c67f9670719eff "pdflatex"
+["biber p90"] 1702639209 "p90.bcf" "p90.bbl" "p90" 1702639251
+  "bibliography/Bibliography.bib" 1701871653 1154 8fd3619f7a0a711313f3a134adf37db6 ""
+  "p90.bcf" 1702639250 107477 6a2bcd9a6e9486bcd3c67f9670719eff "pdflatex"
   (generated)
   "p90.bbl"
   "p90.blg"
-["pdflatex"] 1701258421 "/Users/petergade/Repositories/p90/tex/p90.tex" "p90.pdf" "p90" 1701258424
-  "/Users/petergade/Repositories/p90/tex/p90.tex" 1701258386 8557 784f5bb4301ea5f625cb52a54df49f40 ""
+["pdflatex"] 1702639238 "/Users/petergade/Repositories/p90_drjcc/tex/p90.tex" "p90.pdf" "p90" 1702639251
+  "/Users/petergade/Repositories/p90_drjcc/tex/p90.tex" 1702638805 9649 bd7993614cfdff7b6075cc72dc8fd31c ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -99,6 +99,7 @@
   "/usr/local/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex" 1601326656 35249 abd4adf948f960299a4b3d27c5dddf46 ""
   "/usr/local/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.code.tex" 1601326656 21989 fdc867d05d228316de137a9fc5ec3bbe ""
   "/usr/local/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.code.tex" 1601326656 8893 e851de2175338fdf7c17f3e091d94618 ""
+  "/usr/local/texlive/2022/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarycalc.code.tex" 1601326656 15929 463535aa2c4268fead6674a75c0e8266 ""
   "/usr/local/texlive/2022/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecorations.code.tex" 1601326656 5493 23e371e6fe3e7e42533d6d6c15662e0d ""
   "/usr/local/texlive/2022/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecorations.pathmorphing.code.tex" 1601326656 321 cdd11262840e01e25374a2d458f15e99 ""
   "/usr/local/texlive/2022/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecorations.pathreplacing.code.tex" 1601326656 1319 0b2de5126c6cbc295f0eb77f7344b34d ""
@@ -147,6 +148,7 @@
   "/usr/local/texlive/2022/texmf-dist/tex/generic/pgfplots/libs/pgflibrarypgfplots.surfshading.code.tex" 1452211337 22701 5fab7b8ebb90b053dc067d1bd37e43c2 ""
   "/usr/local/texlive/2022/texmf-dist/tex/generic/pgfplots/libs/pgfplotslibrary.code.tex" 1422740226 3047 aa82404aec57311271f4991c44bd71dc ""
   "/usr/local/texlive/2022/texmf-dist/tex/generic/pgfplots/libs/tikzlibrarypgfplots.contourlua.code.tex" 1620507943 2931 5d52092da9e839accd7c9026062fe5c3 ""
+  "/usr/local/texlive/2022/texmf-dist/tex/generic/pgfplots/libs/tikzlibrarypgfplots.groupplots.code.tex" 1496704190 21935 5271626bc899b87debfce4e0be271edc ""
   "/usr/local/texlive/2022/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsarray.code.tex" 1496704190 23537 54be8160344d894595f6d145b1311658 ""
   "/usr/local/texlive/2022/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsdeque.code.tex" 1262481251 4288 b8d6247899b21e3bb66bb11b24d30f2c ""
   "/usr/local/texlive/2022/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsliststructure.code.tex" 1452211337 13828 11d1b09335a4a8baa693dd1e6cac3edf ""
@@ -265,12 +267,19 @@
   "/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1663245070 4595816 106c4e272f709332e200b7ab82c17944 ""
   "/usr/local/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1663245152 3059190 c1683d7e34f5380c43d33ad9e508bc92 ""
   "/usr/local/texlive/2022/texmf.cnf" 1663245050 577 209b46be99c9075fd74d4c0369380e8c ""
-  "figures/power_high_res_plot.png" 1701252156 285540 7e55e4fc2551e3efe146d76e28310608 ""
-  "p90.aux" 1701258423 2502 7f68b4be1f36bcfcfc728f94f0edf2f6 "pdflatex"
-  "p90.bbl" 1701258416 5450 43b5f31b25a753e0e04201345815a23f "biber p90"
+  "figures/drjcc_bids.tikz" 1702638341 332417 63715302ea005f31d93fc25f639bc6f2 ""
+  "figures/drjcc_is_oos_flex.tikz" 1702638336 329247 09e6f85c4fdc129364695e8d8252629a ""
+  "figures/drjcc_oos_histograms_ALSO-X.tikz" 1702639216 7322 4ee35ec497dcd936211386f8e42cc938 ""
+  "figures/drjcc_oos_histograms_CVaR.tikz" 1702639217 7145 122dc38fd77c3723e1fb3cc11c8bce0a ""
+  "figures/drjcc_oos_histograms_DRJCC.tikz" 1702639216 7277 fe6330607a933cba21085af41f799ab2 ""
+  "figures/drjcc_raw.png" 1702638334 451756 3e6eebd750851571bb22e0f49dbaf617 ""
+  "figures/power_high_res_plot.png" 1702375572 285549 72dbb4d552a966bd9e122b47b67fbecd ""
+  "figures/power_high_res_plot.tikz" 1702375572 37946 023be55a8667bc89f12cb58e43b13007 ""
+  "p90.aux" 1702639250 4168 dd580b0073e0283f1fe88b9f39f705f1 "pdflatex"
+  "p90.bbl" 1702639212 5450 43b5f31b25a753e0e04201345815a23f "biber p90"
   "p90.out" 0 -1 0 "pdflatex"
-  "p90.run.xml" 1701258423 2313 00003f24ff5b87691e2921b835ee58cb "pdflatex"
-  "p90.tex" 1701258386 8557 784f5bb4301ea5f625cb52a54df49f40 ""
+  "p90.run.xml" 1702639250 2313 00003f24ff5b87691e2921b835ee58cb "pdflatex"
+  "p90.tex" 1702638805 9649 bd7993614cfdff7b6075cc72dc8fd31c ""
   (generated)
   "p90.aux"
   "p90.bcf"

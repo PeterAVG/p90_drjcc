@@ -1,9 +1,10 @@
 #%% # noqa
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
+import tikzplotlib
 from also_x import run_also_x
 from base import CrossValidator, IS_OOS_Enum, Method_Enum, OptimizationInstance, Setup
+from bi_level import run_bi_level
 from cvar import run_cvar
 from data_generator import (
     compute_ev_consumption,
@@ -15,7 +16,15 @@ from data_generator import (
 from drjcc import run_drjcc
 from evaluate import evaluate
 
+SAVE_PLOT = True
 P90_EPSILON = 0.10
+
+RUN_ALL_THREE = True
+RUN_BI_LEVEL = False
+
+p_cap_opt, p_cap_opt2, p_cap_opt3, p_cap_opt4 = None, None, None, None  # type: ignore
+is_result, is_result2, is_result3, is_result4 = None, None, None, None  # type: ignore
+oos_result, oos_result2, oos_result3, oos_result4 = None, None, None, None  # type: ignore
 
 setup = Setup(
     rng=np.random.default_rng(0),  # random number generator
@@ -73,7 +82,7 @@ opt_instance = OptimizationInstance(
     cv=cv,
 )
 
-if True:
+if RUN_ALL_THREE:
     ### ALSO-X ###
     p_cap_opt, y_opt = run_also_x(opt_instance)
     is_result = evaluate(
@@ -103,6 +112,17 @@ if True:
         opt_instance, p_cap_opt3, is_oos=IS_OOS_Enum.OOS, method=Method_Enum.CVAR
     )
     print(f"Violation frequency OOS: {round(oos_result3.freq, 2)*100}%")
+
+if RUN_BI_LEVEL:
+    ### Bi-level optimizatino problem using DRJCC ###
+    p_cap_opt4 = run_bi_level(opt_instance)
+    is_result4 = evaluate(
+        opt_instance, p_cap_opt4, is_oos=IS_OOS_Enum.IS, method=Method_Enum.CVAR
+    )
+    oos_result4 = evaluate(
+        opt_instance, p_cap_opt4, is_oos=IS_OOS_Enum.OOS, method=Method_Enum.CVAR
+    )
+    print(f"Violation frequency OOS: {round(oos_result4.freq, 2)*100}%")
 
 #%% # noqa
 
@@ -139,10 +159,13 @@ plt.legend()
 plt.title("EV Charging Simulation")
 plt.xlim(0, setup.no_days)
 plt.grid(True)
-plt.show()
+# NTOE: tikz takes up way too much memory with this plot...
+# tikzplotlib.save("tex/figures/drjcc_raw.tikz")
+if SAVE_PLOT:
+    plt.savefig("tex/figures/drjcc_raw.png", dpi=300)
 
 # create a plot that shows the average consumption for each hour (LINEPLOT)
-f, ax = plt.subplots(1, 2, figsize=(12, 6))
+f, ax = plt.subplots(1, 2, figsize=(12, 4))
 for i, _up_flex, _ in zip(range(2), [up_flex, up_flex_oos], [down_flex, down_flex_oos]):
     x = np.arange(_up_flex.shape[1]) / 60
     prfx = "IS" if i == 0 else "OOS"
@@ -153,10 +176,11 @@ for i, _up_flex, _ in zip(range(2), [up_flex, up_flex_oos], [down_flex, down_fle
         y1=np.nanpercentile(_up_flex, 10, axis=0),
         y2=np.nanpercentile(_up_flex, 90, axis=0),
         alpha=0.2,
-        label=f"{prfx} 10-90%",
+        label=f"{prfx} 10-90\%",  # type: ignore # noqa
     )
     ax[i].set_xlabel("Hour of Day")
-    ax[i].set_ylabel("kW")
+    if i == 0:
+        ax[i].set_ylabel("kW")
     ax[i].set_title(f"{prfx} distribution of EV Charging")
     ax[i].grid(True)
     ax[i].set_xlim(0, 23)
@@ -168,6 +192,10 @@ ylim = max(
 ax[0].set_ylim(0, ylim * 1.1)
 ax[1].set_ylim(0, ylim * 1.1)
 
+if SAVE_PLOT:
+    tikzplotlib.save("tex/figures/drjcc_is_oos_flex.tikz", axis_width="0.49\\textwidth")
+plt.show()
+
 #%% # noqa
 
 # create a plot that shows the mean empirical distribution for each hour with 10/90 percentiles
@@ -175,21 +203,27 @@ f, ax = plt.subplots(1, 2, figsize=(12, 6))
 for i, _emp in zip(range(2), [emp, emp_oos]):
     prfx = "IS" if i == 0 else "OOS"
     x = np.arange(_emp.shape[1]) / 60
-    ax[i].plot(x, np.nanmean(_emp, axis=0), label="mean")
+    ax[i].plot(x, np.nanmean(_emp, axis=0))
     # plot area between 10% and 90%
     ax[i].fill_between(
         x=x,
         y1=np.nanpercentile(_emp, 10, axis=0),
         y2=np.nanpercentile(_emp, 90, axis=0),
         alpha=0.2,
-        label=f"{prfx} 10-90%",
+        # label=f"{prfx} 10-90\%",
     )
     # plot p_cap_opt
-    ax[i].plot(p_cap_opt, label="p_cap_opt ALSO-X", color="green", linestyle="--")
-    ax[i].plot(p_cap_opt2, label="p_cap_opt DRJCC", color="blue", linestyle="--")
-    ax[i].plot(p_cap_opt3, label="p_cap_opt CVaR", color="orange", linestyle="--")
+    # write p_cap_opt as latex math
+    tx = r"$p^{\text{cap}}$"
+    if RUN_ALL_THREE:
+        ax[i].plot(p_cap_opt, label="ALSO-X", color="green", linestyle="--")
+        ax[i].plot(p_cap_opt2, label="DRJCC", color="blue", linestyle="--")
+        ax[i].plot(p_cap_opt3, label="CVaR", color="orange", linestyle="--")
+    if RUN_BI_LEVEL:
+        ax[i].plot(p_cap_opt4, label="Bi-level", color="red", linestyle="--")
     ax[i].set_xlabel("Hour of Day")
-    ax[i].set_ylabel("kW")
+    if i == 0:
+        ax[i].set_ylabel("kW")
     ax[i].set_title(f"{prfx} distribution of flexibility")
     ax[i].grid(True)
     ax[i].set_xlim(0, 23)
@@ -201,40 +235,62 @@ ylim = max(
 ax[0].set_ylim(0, ylim * 1.1)
 ax[1].set_ylim(0, ylim * 1.1)
 
+if SAVE_PLOT:
+    tikzplotlib.save("tex/figures/drjcc_bids.tikz", axis_width="0.49\\textwidth")
 
+#%% # noqa
 # create (3,4) table using Pandas showing revenue and penalty for each method, IS and OOS
-is_days = cv.no_is_days(setup)
-oos_days = cv.no_oos_days(setup)
-print(
-    pd.DataFrame(
-        [
-            {
-                "method": result.method.value,
-                "is": "Yes" if result.is_oos == IS_OOS_Enum.IS else "No",
-                "oos": "Yes" if result.is_oos == IS_OOS_Enum.OOS else "No",
-                "revenue [DKK/day]": round(result.revenue / is_days, 2)
-                if result.is_oos == IS_OOS_Enum.IS
-                else round(result.revenue / oos_days, 2),
-                "penalty [DKK/day]": round(result.penalty / is_days, 2)
-                if result.is_oos == IS_OOS_Enum.IS
-                else round(result.penalty / oos_days, 2),
-            }
-            for result in [
-                is_result,
-                oos_result,
-                is_result2,
-                oos_result2,
-                is_result3,
-                oos_result3,
-            ]
-        ]
-    )
+# is_days = cv.no_is_days(setup)
+# oos_days = cv.no_oos_days(setup)
+# print(
+#     pd.DataFrame(
+#         [
+#             {
+#                 "method": result.method.value,
+#                 "is": "Yes" if result.is_oos == IS_OOS_Enum.IS else "No",
+#                 "oos": "Yes" if result.is_oos == IS_OOS_Enum.OOS else "No",
+#                 "revenue [DKK/day]": round(result.revenue / is_days, 2)
+#                 if result.is_oos == IS_OOS_Enum.IS
+#                 else round(result.revenue / oos_days, 2),
+#                 "penalty [DKK/day]": round(result.penalty / is_days, 2)
+#                 if result.is_oos == IS_OOS_Enum.IS
+#                 else round(result.penalty / oos_days, 2),
+#             }
+#             for result in [
+#                 is_result,
+#                 oos_result,
+#                 is_result2,
+#                 oos_result2,
+#                 is_result3,
+#                 oos_result3,
+#             ]
+#         ]
+#     )
+# )
+
+plt.close()
+if True:
+    import tikzplotlib
+
+assert oos_result is not None
+assert oos_result2 is not None
+assert oos_result3 is not None
+
+ul1 = max(
+    np.max(oos_result.get_freq_distribution()),
+    np.max(oos_result2.get_freq_distribution()),
 )
+ul1 = max(ul1, np.max(oos_result3.get_freq_distribution()))
+ul2 = max(
+    np.max(oos_result.get_violation_distribution()),
+    np.max(oos_result2.get_violation_distribution()),
+)
+ul2 = max(ul2, np.max(oos_result3.get_violation_distribution()))
 
 # create a histogram that shows the distribution of OOS violation frequencies
-f, ax = plt.subplots(3, 2, figsize=(12, 15))
-ax = ax.flatten()
 for i, result in enumerate([oos_result, oos_result2, oos_result3]):
+    f, ax = plt.subplots(1, 2, figsize=(12, 4))
+    # ax = ax.flatten()
     match i:
         case 0:
             method = "ALSO-X"
@@ -242,11 +298,11 @@ for i, result in enumerate([oos_result, oos_result2, oos_result3]):
             color = "green"
         case 1:
             method = "DRJCC"
-            i1 = 2
+            i1 = 0
             color = "blue"
         case 2:
             method = "CVaR"
-            i1 = 4
+            i1 = 0
             color = "orange"
         case _:
             raise ValueError(f"Invalid value for i: {i}")
@@ -260,7 +316,7 @@ for i, result in enumerate([oos_result, oos_result2, oos_result3]):
         ymin=0,
         ymax=max(counts),
         color=color,
-        label=f"{method}: {round(freq_oos*100,2)}%",
+        label=f"{method}: {round(freq_oos*100,2)}" + "%",
         linestyle="--",
     )
     ax[i1].vlines(
@@ -283,7 +339,7 @@ for i, result in enumerate([oos_result, oos_result2, oos_result3]):
     ax[i1].set_xlabel("Within-hour violation frequency")
     ax[i1].set_ylabel("Frequency")
     # ax[i1].set_title("Frequency distribution of violations")
-    ax[i1].legend()
+
     mean_vio = np.mean(result.get_violation_distribution())
     counts, bins, patches = ax[i1 + 1].hist(
         result.get_violation_distribution(), bins=30, edgecolor="black"
@@ -296,25 +352,32 @@ for i, result in enumerate([oos_result, oos_result2, oos_result3]):
         label=f"{method}: {round(mean_vio,2)} kW",
         linestyle="--",
     )
-    ax[i1 + 1].legend()
     ax[i1 + 1].set_xlabel("Magnitude of violations [kW]")
     ax[i1 + 1].set_ylabel("Minutes")
     # ax[i1 + 1].set_title("Magnitude distribution of violations")
 
-ul = max(
-    np.max(oos_result.get_freq_distribution()),
-    np.max(oos_result2.get_freq_distribution()),
-)
-ul = max(ul, np.max(oos_result3.get_freq_distribution()))
-ax[0].set_xlim(0, ul)
-ax[2].set_xlim(0, ul)
-ax[4].set_xlim(0, ul)
-ul = max(
-    np.max(oos_result.get_violation_distribution()),
-    np.max(oos_result2.get_violation_distribution()),
-)
-ul = max(ul, np.max(oos_result3.get_violation_distribution()))
-ax[1].set_xlim(0, ul)
-ax[3].set_xlim(0, ul)
-ax[5].set_xlim(0, ul)
+    ax[i1].set_xlim(0, ul1)
+    ax[i1].set_xlim(0, ul1)
+    ax[i1].set_xlim(0, ul1)
+
+    ax[i1 + 1].set_xlim(0, ul2)
+    ax[i1 + 1].set_xlim(0, ul2)
+    ax[i1 + 1].set_xlim(0, ul2)
+
+    # Position the y-axis label on the right
+    ax[i1 + 1].yaxis.set_label_position("right")
+    # Move the y-axis ticks to the right
+    ax[i1 + 1].yaxis.tick_right()
+
+    ax[i1].legend()
+    ax[i1 + 1].legend()
+
+    if SAVE_PLOT:
+        # NOTE: tikzplotlib can't convert legend as \draw commands does not have \addlegendentry
+        # tikzplotlib.save(
+        #     f"tex/figures/drjcc_oos_histograms_{method}.tikz",
+        #     axis_width="0.49\\textwidth",
+        # )
+        plt.savefig(f"tex/figures/drjcc_oos_histograms_{method}.png", dpi=300)
+
 plt.show()

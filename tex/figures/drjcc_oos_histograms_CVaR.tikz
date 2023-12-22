@@ -1,0 +1,112 @@
+% This file was created with tikzplotlib v0.10.1.
+\begin{tikzpicture}
+
+\definecolor{darkgray176}{RGB}{176,176,176}
+\definecolor{lightgray204}{RGB}{204,204,204}
+\definecolor{orange}{RGB}{255,165,0}
+\definecolor{steelblue31119180}{RGB}{31,119,180}
+
+\begin{groupplot}[group style={group size=2 by 1}]
+\nextgroupplot[
+legend cell align={left},
+legend style={fill opacity=0.8, draw opacity=1, text opacity=1, draw=lightgray204},
+tick align=outside,
+tick pos=left,
+width=0.49\textwidth,
+x grid style={darkgray176},
+xlabel={Within-hour violation frequency},
+xmin=0, xmax=0.433333333333333,
+xtick style={color=black},
+y grid style={darkgray176},
+ylabel={Frequency},
+ymin=0, ymax=228.9,
+ytick style={color=black}
+]
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.116666666666667,0) rectangle (axis cs:0.128333333333333,42);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.128333333333333,0) rectangle (axis cs:0.14,155);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.14,0) rectangle (axis cs:0.151666666666667,204);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.151666666666667,0) rectangle (axis cs:0.163333333333333,0);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.163333333333333,0) rectangle (axis cs:0.175,205);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.175,0) rectangle (axis cs:0.186666666666667,179);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.186666666666667,0) rectangle (axis cs:0.198333333333333,0);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.198333333333333,0) rectangle (axis cs:0.21,218);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.21,0) rectangle (axis cs:0.221666666666667,160);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.221666666666667,0) rectangle (axis cs:0.233333333333333,0);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.233333333333333,0) rectangle (axis cs:0.245,149);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.245,0) rectangle (axis cs:0.256666666666667,98);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.256666666666667,0) rectangle (axis cs:0.268333333333333,159);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.268333333333333,0) rectangle (axis cs:0.28,0);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.28,0) rectangle (axis cs:0.291666666666667,80);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.291666666666667,0) rectangle (axis cs:0.303333333333333,74);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.303333333333333,0) rectangle (axis cs:0.315,0);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.315,0) rectangle (axis cs:0.326666666666667,34);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.326666666666667,0) rectangle (axis cs:0.338333333333333,35);
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.338333333333333,0) rectangle (axis cs:0.35,8);
+\path [draw=orange, semithick, dash pattern=on 5.55pt off 2.4pt]
+(axis cs:0.207324074074074,0)
+--(axis cs:0.207324074074074,218);
+
+\path [draw=black, draw opacity=0.5, semithick, dash pattern=on 5.55pt off 2.4pt]
+(axis cs:0.1,0)
+--(axis cs:0.1,218);
+
+\path [draw=red, semithick, dash pattern=on 5.55pt off 2.4pt]
+(axis cs:0.15,0)
+--(axis cs:0.15,218);
+
+
+\nextgroupplot[
+axis y line=right,
+legend cell align={left},
+legend style={fill opacity=0.8, draw opacity=1, text opacity=1, draw=lightgray204},
+tick align=outside,
+width=0.49\textwidth,
+x grid style={darkgray176},
+xlabel={Magnitude of violations [kW]},
+xmin=0, xmax=32.9949353280271,
+xtick pos=left,
+xtick style={color=black},
+y grid style={darkgray176},
+ylabel={Minutes},
+ymin=0, ymax=2526.3,
+ytick pos=right,
+ytick style={color=black},
+yticklabel style={anchor=west}
+]
+\draw[draw=black,fill=steelblue31119180] (axis cs:0.0387024932025,0) rectangle (axis cs:1.02072485741103,2406);
+\draw[draw=black,fill=steelblue31119180] (axis cs:1.02072485741103,0) rectangle (axis cs:2.00274722161957,1915);
+\draw[draw=black,fill=steelblue31119180] (axis cs:2.00274722161957,0) rectangle (axis cs:2.9847695858281,1618);
+\draw[draw=black,fill=steelblue31119180] (axis cs:2.9847695858281,0) rectangle (axis cs:3.96679195003664,1891);
+\draw[draw=black,fill=steelblue31119180] (axis cs:3.96679195003664,0) rectangle (axis cs:4.94881431424517,1873);
+\draw[draw=black,fill=steelblue31119180] (axis cs:4.94881431424517,0) rectangle (axis cs:5.93083667845371,2121);
+\draw[draw=black,fill=steelblue31119180] (axis cs:5.93083667845371,0) rectangle (axis cs:6.91285904266224,1687);
+\draw[draw=black,fill=steelblue31119180] (axis cs:6.91285904266224,0) rectangle (axis cs:7.89488140687078,1313);
+\draw[draw=black,fill=steelblue31119180] (axis cs:7.89488140687078,0) rectangle (axis cs:8.87690377107931,1174);
+\draw[draw=black,fill=steelblue31119180] (axis cs:8.87690377107931,0) rectangle (axis cs:9.85892613528785,948);
+\draw[draw=black,fill=steelblue31119180] (axis cs:9.85892613528785,0) rectangle (axis cs:10.8409484994964,494);
+\draw[draw=black,fill=steelblue31119180] (axis cs:10.8409484994964,0) rectangle (axis cs:11.8229708637049,934);
+\draw[draw=black,fill=steelblue31119180] (axis cs:11.8229708637049,0) rectangle (axis cs:12.8049932279134,733);
+\draw[draw=black,fill=steelblue31119180] (axis cs:12.8049932279134,0) rectangle (axis cs:13.787015592122,470);
+\draw[draw=black,fill=steelblue31119180] (axis cs:13.787015592122,0) rectangle (axis cs:14.7690379563305,562);
+\draw[draw=black,fill=steelblue31119180] (axis cs:14.7690379563305,0) rectangle (axis cs:15.7510603205391,658);
+\draw[draw=black,fill=steelblue31119180] (axis cs:15.7510603205391,0) rectangle (axis cs:16.7330826847476,196);
+\draw[draw=black,fill=steelblue31119180] (axis cs:16.7330826847476,0) rectangle (axis cs:17.7151050489561,398);
+\draw[draw=black,fill=steelblue31119180] (axis cs:17.7151050489561,0) rectangle (axis cs:18.6971274131647,78);
+\draw[draw=black,fill=steelblue31119180] (axis cs:18.6971274131647,0) rectangle (axis cs:19.6791497773732,56);
+\draw[draw=black,fill=steelblue31119180] (axis cs:19.6791497773732,0) rectangle (axis cs:20.6611721415817,209);
+\draw[draw=black,fill=steelblue31119180] (axis cs:20.6611721415817,0) rectangle (axis cs:21.6431945057903,95);
+\draw[draw=black,fill=steelblue31119180] (axis cs:21.6431945057903,0) rectangle (axis cs:22.6252168699988,114);
+\draw[draw=black,fill=steelblue31119180] (axis cs:22.6252168699988,0) rectangle (axis cs:23.6072392342073,147);
+\draw[draw=black,fill=steelblue31119180] (axis cs:23.6072392342073,0) rectangle (axis cs:24.5892615984159,145);
+\draw[draw=black,fill=steelblue31119180] (axis cs:24.5892615984159,0) rectangle (axis cs:25.5712839626244,0);
+\draw[draw=black,fill=steelblue31119180] (axis cs:25.5712839626244,0) rectangle (axis cs:26.5533063268329,59);
+\draw[draw=black,fill=steelblue31119180] (axis cs:26.5533063268329,0) rectangle (axis cs:27.5353286910415,0);
+\draw[draw=black,fill=steelblue31119180] (axis cs:27.5353286910415,0) rectangle (axis cs:28.51735105525,0);
+\draw[draw=black,fill=steelblue31119180] (axis cs:28.51735105525,0) rectangle (axis cs:29.4993734194585,97);
+\path [draw=orange, semithick, dash pattern=on 5.55pt off 2.4pt]
+(axis cs:6.95181103439593,0)
+--(axis cs:6.95181103439593,2406);
+
+\end{groupplot}
+
+\end{tikzpicture}

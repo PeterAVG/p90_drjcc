@@ -89,56 +89,75 @@ class ALSO_X:
 @dataclass
 class DRJCC:
     M: float
+    M2: np.ndarray
     theta_list: List[float] = field(init=False)
     # theta: float
 
     def __post_init__(self) -> None:
+        # self.theta_list = [
+        #     0.01,
+        # ]
         self.theta_list = [
-            0,
-            1e-07,
-            1e-06,
-            1e-05,
-            1e-05 * 2,
-            1e-05 * 3,
-            1e-05 * 4,
-            1e-05 * 5,
-            1e-04,
-            1e-04 * 2,
-            1e-04 * 3,
-            1e-04 * 4,
-            1e-04 * 5,
-            1e-03,
-            1e-03 * 2,
-            1e-03 * 3,
-            1e-03 * 4,
-            1e-03 * 5,
-            1e-02,
-            1e-02 * 2,
-            1e-02 * 3,
-            1e-02 * 4,
-            1e-02 * 5,
-            1e-01,
-            1e-01 * 2,
-            1e-01 * 3,
-            1e-01 * 4,
-            1e-01 * 5,
+            # 0,
+            0.01,
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6,
+            0.7,
+            0.8,
+            0.9,
             1.0,
-            1.0 + 0.2,
-            1.0 + 0.3,
-            1.0 + 0.4,
-            1.0 + 0.5,
             2.0,
-            2.0 + 0.2,
-            2.0 + 0.3,
-            2.0 + 0.4,
-            2.0 + 0.5,
-            10,
-            20,
-            30,
-            40,
-            50,
-            100,
         ]
+        # self.theta_list = [
+        #     0,
+        #     1e-07,
+        #     1e-06,
+        #     1e-05,
+        #     1e-05 * 2,
+        #     1e-05 * 3,
+        #     1e-05 * 4,
+        #     1e-05 * 5,
+        #     1e-04,
+        #     1e-04 * 2,
+        #     1e-04 * 3,
+        #     1e-04 * 4,
+        #     1e-04 * 5,
+        #     1e-03,
+        #     1e-03 * 2,
+        #     1e-03 * 3,
+        #     1e-03 * 4,
+        #     1e-03 * 5,
+        #     1e-02,
+        #     1e-02 * 2,
+        #     1e-02 * 3,
+        #     1e-02 * 4,
+        #     1e-02 * 5,
+        #     1e-01,
+        #     1e-01 * 2,
+        #     1e-01 * 3,
+        #     1e-01 * 4,
+        #     1e-01 * 5,
+        #     1.0,
+        #     1.0 + 0.2,
+        #     1.0 + 0.3,
+        #     1.0 + 0.4,
+        #     1.0 + 0.5,
+        #     2.0,
+        #     2.0 + 0.2,
+        #     2.0 + 0.3,
+        #     2.0 + 0.4,
+        #     2.0 + 0.5,
+        #     10,
+        #     20,
+        #     30,
+        #     40,
+        #     50,
+        #     100,
+        # ]
 
 
 @dataclass
@@ -170,7 +189,10 @@ class OptimizationInstance:
         self.drjcc = DRJCC(
             # M=1 / self.no_samples * self.empirical_distribution.std() * 3,
             # M=1 / self.no_samples * self.empirical_distribution.std() * 3,
-            M=np.mean(self.empirical_distribution),
+            # M=np.std(self.empirical_distribution),
+            M=np.mean(self.empirical_distribution * 0.10),  # 10% violation
+            M2=self.p90_empirical_distribution,
+            # M=1,
             # M=10**6,
             # theta_list=[theta],
         )
@@ -194,6 +216,16 @@ class OptimizationInstance:
     @property
     def max_of_mean_empirical_distribution(self) -> float:
         return self.average_empirical_distribution.max()
+
+    @property
+    def p90_empirical_distribution(self) -> np.ndarray:
+        return np.percentile(
+            np.mean(
+                self.empirical_distribution.reshape(self.no_samples, 24, -1), axis=2
+            ),
+            10,
+            axis=0,
+        )
 
 
 @dataclass

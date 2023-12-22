@@ -1,11 +1,15 @@
 import math
 from dataclasses import dataclass, field
-from typing import cast
+from typing import Tuple, cast
 
 import numpy as np
 from base import OptimizationInstance
 from gurobipy import GRB, Model
 from utils import timing
+
+EPSILON = list(round(x, 2) for x in np.arange(0.01, 0.31, 0.01))
+# EPSILON = list(round(x, 2) for x in np.arange(0.05, 0.16, 0.01))
+# EPSILON = list(round(x, 2) for x in np.arange(0.01, 0.11, 0.01))
 
 
 class InfeasibleError(Exception):
@@ -15,38 +19,50 @@ class InfeasibleError(Exception):
 @dataclass
 class LocalGurobiObject:
 
+    best_epsilon: float
     best_theta: float
 
     model: Model | None = None
 
-    best_obj: float = np.infty
+    # Energinet's objective (for the outer problem)
+    best_outer_obj: float = -np.infty
+    # Aggregator's objective (for the inner problem)
+    best_inner_obj: float = -np.infty
     best_p_cap_opt: np.ndarray = field(init=False)
 
     best_t: float | None = None
     best_s: np.ndarray | None = None
     best_q: np.ndarray | None = None
-    # best_nu: np.ndarray | None = None
+    best_nu: np.ndarray | None = None
 
     def __post_init__(self) -> None:
         self.best_p_cap_opt = np.zeros(24)
 
-    def get_var_values(self) -> np.ndarray:
+    def get_var_values(self) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         all_vars = self.model.getVars()  # type: ignore
         values = self.model.getAttr("X", all_vars)  # type: ignore
         names = self.model.getAttr("VarName", all_vars)  # type: ignore
         p_cap_opt = np.array(
             [val for name, val in zip(names, values) if name.startswith("p_cap")]
         )
-        return p_cap_opt
+        nu = np.array(
+            [val for name, val in zip(names, values) if name.startswith("nu")]
+        )
+        # get non-negative values of nu
+        nu = np.maximum(nu, 0)
+        q = np.array([val for name, val in zip(names, values) if name.startswith("q")])
+        return p_cap_opt, nu, q
 
-    def update_s_t_q(self, no_samples: int) -> None:
+    def update_s_t_q_nu(self, no_samples: int, no_minutes_per_hour: int) -> None:
         t = self.model.getVarByName("t").x  # type: ignore
         s = np.array([self.model.getVarByName(f"s[{w}]").x for w in range(no_samples)])  # type: ignore
         q = np.array([self.model.getVarByName(f"q[{w}]").x for w in range(no_samples)])  # type: ignore
-        # nu = np.array([self.model.getVarByName(f"nu[{w},{i}]").x for w in range(no_samples) for i in range(24 * 60)])  # type: ignore
+        nu = np.array([self.model.getVarByName(f"nu[{w},{i}]").x for w in range(no_samples) for i in range(24 * no_minutes_per_hour)])  # type: ignore
+        nu = np.maximum(nu, 0)
         self.best_t = t
         self.best_s = s
         self.best_q = q
+        self.best_nu = nu
 
 
 @timing()
@@ -65,8 +81,6 @@ def run_optimization(
     prices = inst.prices
     epsilon = inst.epsilon
     M = inst.drjcc.M
-    # M2 = inst.drjcc.M2
-    # assert len(M2) == 24
 
     def add_theta0_constraint(model: Model, theta: float) -> None:
         """
@@ -74,7 +88,6 @@ def run_optimization(
         in order to get the right result.
         """
         if theta == 0 and False:
-            print("Adding theta0 constraint...")
             model.addConstr(  # type: ignore
                 sum(model.getVarByName(f"q[{w}]") for w in range(no_samples))
                 <= math.floor(epsilon * no_samples),
@@ -118,10 +131,20 @@ def run_optimization(
             name="t",
             vtype=GRB.CONTINUOUS,
         )
+        m.addVars(  # type: ignore
+            no_samples,
+            24 * no_minutes_per_hour,
+            lb=-GRB.INFINITY,
+            name="nu",
+            vtype=GRB.CONTINUOUS,
+        )
         m.update()
 
-        # Objective: Maximize earnings
-        m.setObjective(sum(m.getVarByName(f"p_cap[{h}]") * prices[h] for h in range(24)), GRB.MAXIMIZE)  # type: ignore
+        # Inner objective: Maximize earnings - expected violation penalty (which is just paying back the TSO)
+        m.setObjective(
+            sum(m.getVarByName(f"p_cap[{h}]") * prices[h] for h in range(24)),
+            GRB.MAXIMIZE,
+        )
 
         # Constraints
         print("Adding constraints...")
@@ -150,12 +173,21 @@ def run_optimization(
             ),
             "jcc2",
         )
+        m.addConstrs(  # type: ignore
+            (
+                m.getVarByName(f"nu[{w},{i}]")
+                == m.getVarByName(f"p_cap[{i//60}]") - empirical_distribution[w, i]
+                for w in range(no_samples)
+                for i in range(24 * no_minutes_per_hour)
+            ),
+            "nu_constraint",
+        )
         local.model = m
         add_theta0_constraint(local.model, theta)
         local.model.update()  # type: ignore
     else:
         assert isinstance(local.model, Model)
-        # only adjust constraint related to a new theta
+        # only adjust constraint related to a new theta and epsilon
         local.model.remove(local.model.getConstrByName("jcc0"))  # type: ignore
         local.model.addConstr(  # type: ignore
             epsilon * no_samples * local.model.getVarByName("t")
@@ -196,49 +228,75 @@ def run_optimization(
     print(f"Objective value: {round(local.model.objVal, 1)}")  # type: ignore
 
 
+def exponential_function(x: float) -> float:
+    return 100 * (2**x - 1)
+
+
 @timing()
-def run_drjcc(opt_instance: OptimizationInstance) -> np.ndarray:
+def run_bi_level(opt_instance: OptimizationInstance) -> np.ndarray:
 
     theta_list = opt_instance.drjcc.theta_list
     no_samples = opt_instance.cv.no_samples
-    local = LocalGurobiObject(best_theta=theta_list[0])
+    no_minutes_per_hour = opt_instance.setup.no_minutes_per_hour
+    local = LocalGurobiObject(
+        best_theta=theta_list[0],
+        best_epsilon=EPSILON[0],
+    )
 
-    # perform grid-search over all thetas
-    for theta in theta_list:
-        print(f"theta: {theta}")
-        try:
-            run_optimization(opt_instance, local, theta, show_output=False)
-        except InfeasibleError:
-            continue
-        p_cap_opt_ = local.get_var_values()
-        print(f"p_cap_opt: {p_cap_opt_}")
+    # perform grid-search over all thetas and epsilons
+    for epsilon in EPSILON:
 
-        # check if this is the best solution AND it's not bogus...
-        if (
-            local.model.objVal < local.best_obj  # type: ignore
-            and not any(
-                p_cap_opt_
-                >= opt_instance.setup.max_charge_rate * opt_instance.cv.no_ev_samples
-                - 1
-            )
-            and not (p_cap_opt_ <= 1).all()
-            and not (p_cap_opt_ < 0).any()
-        ):
-            local.best_p_cap_opt = p_cap_opt_
-            local.best_theta = theta
-            local.best_obj = local.model.objVal  # type: ignore
-            local.update_s_t_q(no_samples)
+        opt_instance.epsilon = epsilon
+        assert opt_instance.epsilon == epsilon
 
-    if local.best_obj == 0.0:
+        for theta in theta_list:
+            print(f"epsilon: {epsilon}, theta: {theta}")
+
+            try:
+                run_optimization(opt_instance, local, theta, show_output=False)
+            except InfeasibleError:
+                continue
+
+            p_cap_opt_, nu, q = local.get_var_values()
+            nu_sum = nu.reshape(no_samples, 24, -1).sum(axis=2).mean(axis=0).sum() / 60
+            penalty = exponential_function(sum(q) / no_samples)
+            outer_obj = sum(p_cap_opt_) - nu_sum * penalty
+            print(f"nu: {nu_sum}, outer obj: {outer_obj}")
+
+            # check if this is the best solution AND it's not bogus...
+            if (
+                outer_obj > local.best_outer_obj
+                and not any(
+                    p_cap_opt_
+                    >= opt_instance.setup.max_charge_rate
+                    * opt_instance.cv.no_ev_samples
+                    - 1
+                )
+                and not (p_cap_opt_ <= 1).all()
+                and not (p_cap_opt_ < 0).any()
+            ):
+                print("New best solution found!")
+                local.best_p_cap_opt = p_cap_opt_
+                local.best_theta = theta
+                local.best_epsilon = epsilon
+                local.best_outer_obj = outer_obj
+                local.best_inner_obj = local.model.objVal  # type: ignore
+                local.update_s_t_q_nu(no_samples, no_minutes_per_hour)
+
+    if local.best_outer_obj == -np.infty:
         print("No solution found for any theta for DRJCC!")
 
     assert local.model is not None
     print("\n\n")
     print(f"Best theta: {local.best_theta}")
+    print(f"Best epsilon: {local.best_epsilon}")
+    print(f"Best outer objective value: {local.best_outer_obj}")
+    print(f"Best inner objective value: {local.best_inner_obj}")
     print(f"Best p_cap_opt: {local.best_p_cap_opt}")
-    print(f"Best objective value: {local.best_obj}")
+
     print(f"Best t: {local.best_t}")  # type: ignore
     print(f"Best s: {local.best_s}")  # type: ignore
     print(f"Best q: {local.best_q}")  # type: ignore
+    print(f"Best nu: {round(sum(local.best_nu) / 60 / no_samples,1)}")  # type: ignore
 
     return local.best_p_cap_opt

@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+# plt.style.use("ggplot")
+
 rng = np.random.default_rng(42)
 
 amplitude = 3
@@ -52,7 +54,7 @@ ax.set_xlabel("minute")
 ax.set_ylabel("kW")
 
 # Keep the grid to provide a reference for the variability in the data
-ax.grid(True, which="both", linestyle="--", linewidth=0.5)
+# ax.grid(True, which="both", linestyle="--", linewidth=0.5)
 
 # Revert the axes to the standard lines without arrow tips
 ax.spines["bottom"].set_position(("data", 0))
@@ -97,24 +99,29 @@ ax.text(
 # Add annotation for P^min and P^max to the y-axis with increased font size
 ax.text(
     s=r"$P^{\mathrm{Min}}$",
-    x=-0.2,
+    x=0.2,
     y=1,
     verticalalignment="center",
-    horizontalalignment="right",
+    horizontalalignment="left",
     fontsize=16,
 )
 ax.text(
     s=r"$P^{\mathrm{Max}}$",
-    x=-0.2,
+    x=0.2,
     y=9,
     verticalalignment="center",
-    horizontalalignment="right",
+    horizontalalignment="left",
     fontsize=16,
 )
 
 # Save the plot with high resolution
 high_res_image_path_final = "tex/figures/power_high_res_plot.png"
 plt.savefig(high_res_image_path_final, dpi=300)
+
+if True:
+    import tikzplotlib
+
+tikzplotlib.save("tex/figures/power_high_res_plot.tikz")
 
 # Show the updated plot
 plt.show()

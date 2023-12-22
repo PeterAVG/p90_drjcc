@@ -16,6 +16,8 @@
 \usepackage{amsthm}
 \usepackage{tikz}
 \usepackage{pgfplots}
+\usepgfplotslibrary{groupplots} % Load the groupplots library
+\pgfplotsset{compat=newest}
 \usepackage{multirow}
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -59,6 +61,13 @@
     \label{fig:power}
 \end{figure}
 
+\begin{figure}[!t]
+    \centering
+    \input{figures/power_high_res_plot.tikz}
+    \caption{Uncertain power consumption of flexible demand portfolio, denoted by $p_{m}^{\text{B}}(\xi)$. The available capacity for bidding flexibility for a given time instance is illustrated as $p^{\text{cap},\downarrow}$ for down-regulation and $p^{\text{cap},\uparrow}$ for up-regulation. $P^{\text{Max}}$ and $P^{\text{Min}}$ is the  maximum and minimum power consumption of the portfolio, respectively.}
+    \label{fig:power}
+\end{figure}
+
 \noindent Abbreviations:
 
 \begin{itemize}
@@ -90,9 +99,9 @@
 \begin{align}\label{P1}
     \max_{p_{h}^{\text{cap}, \uparrow}, p_{h}^{\text{cap}, \downarrow}} \quad & \sum_h \left( \lambda_h p_{h}^{\text{cap}, ,\uparrow} + \lambda_h p_{h}^{\text{cap},\downarrow} \right)                                                                                               \\
     \text{s.t.} \quad                                                         & \mathbb{P}  \left( p_{h}^{\text{cap}, \uparrow} \leq P_{m}^{\text{B}}(\xi) - P^{\text{Min}}, \quad \forall{h} \in \mathcal{H}, \forall{m} \in \mathcal{M}_{h}  \right)   & \geq 1 - \epsilon          \\
-                                                                              & \mathbb{P}  \left( p_{h}^{\text{cap}, \downarrow} \leq P^{\text{Max}} - P_{m}^{\text{B}}(\xi), \quad \forall{h} \in \mathcal{H}, \forall{m} \in \mathcal{M}_{h}  \right) & \geq 1 - \epsilon          \\
-                                                                              & p_{h}^{\text{cap},(.)} \leq P^{\text{Max}},                                                                                                                              & \forall{h} \in \mathcal{H} \\
-                                                                              & p_{h}^{\text{cap},(.)} \geq 0,                                                                                                                                           & \forall{h} \in \mathcal{H}
+    & \mathbb{P}  \left( p_{h}^{\text{cap}, \downarrow} \leq P^{\text{Max}} - P_{m}^{\text{B}}(\xi), \quad \forall{h} \in \mathcal{H}, \forall{m} \in \mathcal{M}_{h}  \right) & \geq 1 - \epsilon          \\
+    & p_{h}^{\text{cap},(.)} \leq P^{\text{Max}},                                                                                                                         & \forall{h} \in \mathcal{H} \\
+    & p_{h}^{\text{cap},(.)} \geq 0,                                                                                                                              & \forall{h} \in \mathcal{H}
 \end{align}
 
 Here, we note that Problem \ref{P1} can be simplified by assuming symmetric flexibility, i.e., $p_{h}^{\text{cap},\downarrow} = p_{h}^{\text{cap},\uparrow} = p_{h}^{\text{cap}}$. Then the two JCCs are essentially the same since the uncertain power consumption, $P_{h}^{\text{B}}(\xi)$, is simply set to $P_{h}^{\text{B}}(\xi) \triangleq \min \{ P_{h}^{\text{B}}(\xi) - P^{\text{Min}}, P^{\text{Max}} - P_{h}^{\text{B}}(\xi) \}$.
@@ -146,6 +155,44 @@ In this section, we take a different approach. Converting Problem \ref{P3} to it
 \end{align}
 
 It is still possible to use CVaR and ALSO-X for Problem \ref{PP1} as it yields tractable, linear formulations \cite{ordoudis2021energy} for CVaR and ALSO-X \cite{jiang2023also}.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.99\columnwidth]{figures/drjcc_raw.png}
+    \caption{.}
+\end{figure}
+
+\begin{figure}[!t]
+    \centering
+    \input{figures/drjcc_is_oos_flex.tikz}
+    \caption{some caption.}
+\end{figure}
+
+\begin{figure}[!t]
+    \centering
+    \input{figures/drjcc_bids.tikz}
+    \caption{.}
+\end{figure}
+
+\begin{figure}[!t]
+    \centering
+    \input{figures/drjcc_oos_histograms_ALSO-X.tikz}
+    \caption{.}
+\end{figure}
+
+\begin{figure}[!t]
+    \centering
+    \input{figures/drjcc_oos_histograms_CVaR.tikz}
+    \caption{.}
+\end{figure}
+
+\begin{figure}[!t]
+    \centering
+    \input{figures/drjcc_oos_histograms_DRJCC.tikz}
+    \caption{.}
+\end{figure}
+
+Write something
 
 \section*{Number of samples required}
 

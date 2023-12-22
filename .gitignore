@@ -1,3 +1,4 @@
 .venv
 .git
 .DS_Store
+copy_to_thesis.sh
