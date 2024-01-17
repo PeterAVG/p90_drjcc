@@ -2,3 +2,5 @@
 .git
 .DS_Store
 copy_to_thesis.sh
+src/__pycache__
+*/__pycache__/*

@@ -1,6 +1,6 @@
 import math
 from dataclasses import dataclass, field
-from typing import Tuple, cast
+from typing import Dict, List, Tuple, cast
 
 import numpy as np
 from base import OptimizationInstance
@@ -233,7 +233,9 @@ def exponential_function(x: float) -> float:
 
 
 @timing()
-def run_bi_level(opt_instance: OptimizationInstance) -> np.ndarray:
+def run_bi_level(
+    opt_instance: OptimizationInstance,
+) -> Tuple[np.ndarray, List[Dict[str, float]], LocalGurobiObject]:
 
     theta_list = opt_instance.drjcc.theta_list
     no_samples = opt_instance.cv.no_samples
@@ -242,6 +244,8 @@ def run_bi_level(opt_instance: OptimizationInstance) -> np.ndarray:
         best_theta=theta_list[0],
         best_epsilon=EPSILON[0],
     )
+
+    grid_result = []
 
     # perform grid-search over all thetas and epsilons
     for epsilon in EPSILON:
@@ -263,6 +267,27 @@ def run_bi_level(opt_instance: OptimizationInstance) -> np.ndarray:
             outer_obj = sum(p_cap_opt_) - nu_sum * penalty
             print(f"nu: {nu_sum}, outer obj: {outer_obj}")
 
+            # save result if it's not bogus
+            if (
+                not any(
+                    p_cap_opt_
+                    >= opt_instance.setup.max_charge_rate
+                    * opt_instance.cv.no_ev_samples
+                    - 1
+                )
+                and not (p_cap_opt_ <= 1).all()
+                and not (p_cap_opt_ < 0).any()
+            ):
+                grid_result.append(
+                    {
+                        "theta": theta,
+                        "epsilon": epsilon,
+                        "outer_obj": outer_obj,
+                        "p_cap_opt": p_cap_opt_,
+                        "nu": nu_sum,
+                        "penalty": penalty,
+                    }
+                )
             # check if this is the best solution AND it's not bogus...
             if (
                 outer_obj > local.best_outer_obj
@@ -299,4 +324,4 @@ def run_bi_level(opt_instance: OptimizationInstance) -> np.ndarray:
     print(f"Best q: {local.best_q}")  # type: ignore
     print(f"Best nu: {round(sum(local.best_nu) / 60 / no_samples,1)}")  # type: ignore
 
-    return local.best_p_cap_opt
+    return local.best_p_cap_opt, grid_result, local

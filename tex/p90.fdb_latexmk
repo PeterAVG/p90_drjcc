@@ -1,12 +1,12 @@
 # Fdb version 3
-["biber p90"] 1702639209 "p90.bcf" "p90.bbl" "p90" 1702639251
+["biber p90"] 1705485667 "p90.bcf" "p90.bbl" "p90" 1705485715
   "bibliography/Bibliography.bib" 1701871653 1154 8fd3619f7a0a711313f3a134adf37db6 ""
-  "p90.bcf" 1702639250 107477 6a2bcd9a6e9486bcd3c67f9670719eff "pdflatex"
+  "p90.bcf" 1705485715 107477 6a2bcd9a6e9486bcd3c67f9670719eff "pdflatex"
   (generated)
   "p90.bbl"
   "p90.blg"
-["pdflatex"] 1702639238 "/Users/petergade/Repositories/p90_drjcc/tex/p90.tex" "p90.pdf" "p90" 1702639251
-  "/Users/petergade/Repositories/p90_drjcc/tex/p90.tex" 1702638805 9649 bd7993614cfdff7b6075cc72dc8fd31c ""
+["pdflatex"] 1705485699 "/Users/petergade/Repositories/p90_drjcc/tex/p90.tex" "p90.pdf" "p90" 1705485715
+  "/Users/petergade/Repositories/p90_drjcc/tex/p90.tex" 1705485649 10105 68d77e117e5762401a4bcba6427e98e6 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -269,17 +269,18 @@
   "/usr/local/texlive/2022/texmf.cnf" 1663245050 577 209b46be99c9075fd74d4c0369380e8c ""
   "figures/drjcc_bids.tikz" 1702638341 332417 63715302ea005f31d93fc25f639bc6f2 ""
   "figures/drjcc_is_oos_flex.tikz" 1702638336 329247 09e6f85c4fdc129364695e8d8252629a ""
-  "figures/drjcc_oos_histograms_ALSO-X.tikz" 1702639216 7322 4ee35ec497dcd936211386f8e42cc938 ""
-  "figures/drjcc_oos_histograms_CVaR.tikz" 1702639217 7145 122dc38fd77c3723e1fb3cc11c8bce0a ""
-  "figures/drjcc_oos_histograms_DRJCC.tikz" 1702639216 7277 fe6330607a933cba21085af41f799ab2 ""
+  "figures/drjcc_oos_histograms_ALSO-X.png" 1705482648 189834 b3ec278c586a810d9e84fe7d7d6624c2 ""
+  "figures/drjcc_oos_histograms_CVaR.png" 1705482650 175494 eb206b5683bb8bcf7199223e5fcbe6ae ""
+  "figures/drjcc_oos_histograms_DRJCC.png" 1705482649 186609 0908b38819feca5379dfbc4811d3ea03 ""
   "figures/drjcc_raw.png" 1702638334 451756 3e6eebd750851571bb22e0f49dbaf617 ""
+  "figures/heatmap.png" 1705485586 158364 e95bef3a289861e1a77fda18ebbbd8fb ""
   "figures/power_high_res_plot.png" 1702375572 285549 72dbb4d552a966bd9e122b47b67fbecd ""
   "figures/power_high_res_plot.tikz" 1702375572 37946 023be55a8667bc89f12cb58e43b13007 ""
-  "p90.aux" 1702639250 4168 dd580b0073e0283f1fe88b9f39f705f1 "pdflatex"
-  "p90.bbl" 1702639212 5450 43b5f31b25a753e0e04201345815a23f "biber p90"
+  "p90.aux" 1705485715 4282 a416ef8aa1a63825cc145c461d533e73 "pdflatex"
+  "p90.bbl" 1705485670 5450 43b5f31b25a753e0e04201345815a23f "biber p90"
   "p90.out" 0 -1 0 "pdflatex"
-  "p90.run.xml" 1702639250 2313 00003f24ff5b87691e2921b835ee58cb "pdflatex"
-  "p90.tex" 1702638805 9649 bd7993614cfdff7b6075cc72dc8fd31c ""
+  "p90.run.xml" 1705485715 2313 00003f24ff5b87691e2921b835ee58cb "pdflatex"
+  "p90.tex" 1705485649 10105 68d77e117e5762401a4bcba6427e98e6 ""
   (generated)
   "p90.aux"
   "p90.bcf"

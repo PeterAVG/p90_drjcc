@@ -4,7 +4,7 @@ import numpy as np
 import tikzplotlib
 from also_x import run_also_x
 from base import CrossValidator, IS_OOS_Enum, Method_Enum, OptimizationInstance, Setup
-from bi_level import run_bi_level
+from bi_level import EPSILON, run_bi_level
 from cvar import run_cvar
 from data_generator import (
     compute_ev_consumption,
@@ -15,16 +15,18 @@ from data_generator import (
 )
 from drjcc import run_drjcc
 from evaluate import evaluate
+from utils import _set_font_size
 
-SAVE_PLOT = True
+SAVE_PLOT = False
 P90_EPSILON = 0.10
 
-RUN_ALL_THREE = True
-RUN_BI_LEVEL = False
+RUN_ALL_THREE = False
+RUN_BI_LEVEL = True
 
 p_cap_opt, p_cap_opt2, p_cap_opt3, p_cap_opt4 = None, None, None, None  # type: ignore
 is_result, is_result2, is_result3, is_result4 = None, None, None, None  # type: ignore
 oos_result, oos_result2, oos_result3, oos_result4 = None, None, None, None  # type: ignore
+grid_result = None  # type: ignore
 
 setup = Setup(
     rng=np.random.default_rng(0),  # random number generator
@@ -115,14 +117,14 @@ if RUN_ALL_THREE:
 
 if RUN_BI_LEVEL:
     ### Bi-level optimizatino problem using DRJCC ###
-    p_cap_opt4 = run_bi_level(opt_instance)
-    is_result4 = evaluate(
-        opt_instance, p_cap_opt4, is_oos=IS_OOS_Enum.IS, method=Method_Enum.CVAR
-    )
-    oos_result4 = evaluate(
-        opt_instance, p_cap_opt4, is_oos=IS_OOS_Enum.OOS, method=Method_Enum.CVAR
-    )
-    print(f"Violation frequency OOS: {round(oos_result4.freq, 2)*100}%")
+    p_cap_opt4, grid_result, local_obj = run_bi_level(opt_instance)
+    # is_result4 = evaluate(
+    #     opt_instance, p_cap_opt4, is_oos=IS_OOS_Enum.IS, method=Method_Enum.CVAR
+    # )
+    # oos_result4 = evaluate(
+    #     opt_instance, p_cap_opt4, is_oos=IS_OOS_Enum.OOS, method=Method_Enum.CVAR
+    # )
+    # print(f"Violation frequency OOS: {round(oos_result4.freq, 2)*100}%")
 
 #%% # noqa
 
@@ -219,7 +221,7 @@ for i, _emp in zip(range(2), [emp, emp_oos]):
         ax[i].plot(p_cap_opt, label="ALSO-X", color="green", linestyle="--")
         ax[i].plot(p_cap_opt2, label="DRJCC", color="blue", linestyle="--")
         ax[i].plot(p_cap_opt3, label="CVaR", color="orange", linestyle="--")
-    if RUN_BI_LEVEL:
+    if RUN_BI_LEVEL and False:
         ax[i].plot(p_cap_opt4, label="Bi-level", color="red", linestyle="--")
     ax[i].set_xlabel("Hour of Day")
     if i == 0:
@@ -372,6 +374,14 @@ for i, result in enumerate([oos_result, oos_result2, oos_result3]):
     ax[i1].legend()
     ax[i1 + 1].legend()
 
+    # rotate xticks
+    for ax_ in [ax[i1], ax[i1 + 1]]:
+        plt.sca(ax_)
+        plt.xticks(rotation=45)
+
+    _set_font_size(ax[i1], misc=16, legend=14)
+    _set_font_size(ax[i1 + 1], misc=16, legend=14)
+
     if SAVE_PLOT:
         # NOTE: tikzplotlib can't convert legend as \draw commands does not have \addlegendentry
         # tikzplotlib.save(
@@ -379,5 +389,63 @@ for i, result in enumerate([oos_result, oos_result2, oos_result3]):
         #     axis_width="0.49\\textwidth",
         # )
         plt.savefig(f"tex/figures/drjcc_oos_histograms_{method}.png", dpi=300)
+
+plt.show()
+
+#%% # noqa
+assert grid_result is not None
+
+
+epsilon_length = len(EPSILON)
+theta_length = len(opt_instance.drjcc.theta_list)
+matrix = np.full((epsilon_length, theta_length), np.nan)
+for ele in grid_result:
+    ep = ele["epsilon"]
+    th = ele["theta"]
+    assert ep in EPSILON
+    assert th in opt_instance.drjcc.theta_list
+    # get index of epsilon in EPSILON
+    ep_ix = np.where(EPSILON == ep)[0][0]
+    # get index of theta in theta_list
+    th_ix = opt_instance.drjcc.theta_list.index(th)
+    # save result in matrix
+    matrix[ep_ix, th_ix] = ele["outer_obj"]
+
+print(matrix.shape)
+print(np.nanmax(matrix))
+# get row index and col index for max value
+row_ix, col_ix = np.where(matrix == np.nanmax(matrix))
+assert np.isclose(np.nanmax(matrix), matrix[row_ix, col_ix])
+print(f"Optimal epsilon: {EPSILON[row_ix[0]]}")
+print(f"Optimal theta: {opt_instance.drjcc.theta_list[col_ix[0]]}")
+
+# plot a heatmap with epsilon on x-axis, theta on y-axis and outer_objective on z-axis
+f, ax = plt.subplots(1, 1, figsize=(6, 6))
+# use a colormap where dark is higher and light is lower
+cmap = plt.cm.get_cmap("viridis_r")
+ax.imshow(matrix, cmap=cmap, interpolation="nearest")
+# colorbar
+cbar = ax.figure.colorbar(ax.imshow(matrix, cmap=cmap, interpolation="nearest"))
+cbar.ax.set_ylabel("Available flexibility [kW]", rotation=-90, va="bottom")
+ax.set_xlabel("Theta")
+ax.set_ylabel("Epsilon")
+ax.set_xticks(np.arange(theta_length))
+ax.set_yticks(np.arange(epsilon_length))
+ax.set_xticklabels(opt_instance.drjcc.theta_list)
+ax.set_yticklabels(EPSILON)
+# rotate xticks
+plt.setp(ax.get_xticklabels(), rotation=60, ha="right", rotation_mode="anchor")
+
+# Interpretation of heatmap:
+# Low theta and high epsilon gives very low avaialble flexibility (obj value for TSO)
+# due to exponential penalty function in bi_level.py
+
+if SAVE_PLOT:
+    # tikz conversion does not work for some reason
+    # tikzplotlib.save(
+    #     "tex/figures/heatmap.tikz",
+    #     axis_width="0.49\\textwidth",
+    # )
+    plt.savefig("tex/figures/heatmap.png", dpi=300)
 
 plt.show()

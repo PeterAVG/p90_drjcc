@@ -1,15 +1,15 @@
 [0] Config.pm:306> INFO - This is Biber 2.18
 [0] Config.pm:309> INFO - Logfile is 'p90.blg'
-[91] biber-darwin:340> INFO - === Fri Dec 15, 2023, 12:20:12
-[107] Biber.pm:418> INFO - Reading 'p90.bcf'
-[212] Biber.pm:978> INFO - Found 4 citekeys in bib section 0
-[227] Biber.pm:4401> INFO - Processing section 0
-[238] Biber.pm:4592> INFO - Looking for bibtex file 'bibliography/Bibliography.bib' for section 0
-[240] bibtex.pm:1713> INFO - LaTeX decoding ...
-[246] bibtex.pm:1518> INFO - Found BibTeX data source 'bibliography/Bibliography.bib'
-[300] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[300] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[300] Biber.pm:4221> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
-[301] Biber.pm:4227> INFO - No sort tailoring available for locale 'en-US'
-[310] bbl.pm:654> INFO - Writing 'p90.bbl' with encoding 'UTF-8'
-[312] bbl.pm:757> INFO - Output to p90.bbl
+[86] biber-darwin:340> INFO - === Wed Jan 17, 2024, 11:01:10
+[105] Biber.pm:418> INFO - Reading 'p90.bcf'
+[216] Biber.pm:978> INFO - Found 4 citekeys in bib section 0
+[233] Biber.pm:4401> INFO - Processing section 0
+[247] Biber.pm:4592> INFO - Looking for bibtex file 'bibliography/Bibliography.bib' for section 0
+[248] bibtex.pm:1713> INFO - LaTeX decoding ...
+[256] bibtex.pm:1518> INFO - Found BibTeX data source 'bibliography/Bibliography.bib'
+[311] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[311] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[311] Biber.pm:4221> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
+[311] Biber.pm:4227> INFO - No sort tailoring available for locale 'en-US'
+[320] bbl.pm:654> INFO - Writing 'p90.bbl' with encoding 'UTF-8'
+[322] bbl.pm:757> INFO - Output to p90.bbl

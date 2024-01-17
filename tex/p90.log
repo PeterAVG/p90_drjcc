@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.15)  15 DEC 2023 12:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.15)  17 JAN 2024 11:01
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -936,31 +936,41 @@ File: figures/drjcc_raw.png Graphic file (type png)
 <use figures/drjcc_raw.png>
 Package pdftex.def Info: figures/drjcc_raw.png  used on input line 161.
 (pdftex.def)             Requested size: 341.5519pt x 204.93285pt.
- (./figures/drjcc_is_oos_flex.tikz) (./figures/drjcc_bids.tikz) (./figures/drjcc_oos_histograms_ALSO-X.tikz)
-Overfull \hbox (21.04527pt too wide) in paragraph at lines 112--180
- [][]
- []
+ (./figures/drjcc_is_oos_flex.tikz) (./figures/drjcc_bids.tikz)
+<figures/drjcc_oos_histograms_ALSO-X.png, id=86, 867.24pt x 289.08pt>
+File: figures/drjcc_oos_histograms_ALSO-X.png Graphic file (type png)
+<use figures/drjcc_oos_histograms_ALSO-X.png>
+Package pdftex.def Info: figures/drjcc_oos_histograms_ALSO-X.png  used on input line 180.
+(pdftex.def)             Requested size: 341.5519pt x 113.85231pt.
+<figures/drjcc_oos_histograms_CVaR.png, id=87, 867.24pt x 289.08pt>
+File: figures/drjcc_oos_histograms_CVaR.png Graphic file (type png)
+<use figures/drjcc_oos_histograms_CVaR.png>
+Package pdftex.def Info: figures/drjcc_oos_histograms_CVaR.png  used on input line 187.
+(pdftex.def)             Requested size: 341.5519pt x 113.85231pt.
+<figures/drjcc_oos_histograms_DRJCC.png, id=88, 867.24pt x 289.08pt>
+File: figures/drjcc_oos_histograms_DRJCC.png Graphic file (type png)
+<use figures/drjcc_oos_histograms_DRJCC.png>
+Package pdftex.def Info: figures/drjcc_oos_histograms_DRJCC.png  used on input line 194.
+(pdftex.def)             Requested size: 341.5519pt x 113.85231pt.
+<figures/heatmap.png, id=89, 433.62pt x 433.62pt>
+File: figures/heatmap.png Graphic file (type png)
+<use figures/heatmap.png>
+Package pdftex.def Info: figures/heatmap.png  used on input line 203.
+(pdftex.def)             Requested size: 341.5519pt x 341.57019pt.
+ [4 <./figures/drjcc_raw.png>]
 
-(./figures/drjcc_oos_histograms_CVaR.tikz)
-Overfull \hbox (21.04527pt too wide) in paragraph at lines 112--186
- [][]
- []
+LaTeX Warning: Text page 5 contains only floats.
 
-(./figures/drjcc_oos_histograms_DRJCC.tikz)
-Overfull \hbox (21.04527pt too wide) in paragraph at lines 111--192
- [][]
- []
-
-[4 <./figures/drjcc_raw.png>] [5] [6]
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 199.
+[5 <./figures/drjcc_oos_histograms_ALSO-X.png>] [6 <./figures/drjcc_oos_histograms_CVaR.png> <./figures/drjcc_oos_histograms_DRJCC.png>] [7 <./figures/heatmap.png>]
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 211.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-Overfull \hbox (2.20718pt too wide) in paragraph at lines 200--200
+Overfull \hbox (2.20718pt too wide) in paragraph at lines 212--212
 []\T1/cmr/m/n/10 ``Energinet: Pre-qual-i-fi-ca-tion and Test''. In: \T1/cmr/m/it/10 En-erginet \T1/cmr/m/n/10 (2023). Ac-cessed: 2023-
  []
 
-[7
+[8
 
 ] (./p90.aux)
 
@@ -973,17 +983,17 @@ Package logreq Info: Writing requests to 'p90.run.xml'.
 
  )
 Here is how much of TeX's memory you used:
- 43798 strings out of 475075
- 1037752 string characters out of 5779009
- 3184878 words of memory out of 5000000
- 64522 multiletter control sequences out of 15000+600000
+ 43802 strings out of 475075
+ 1037977 string characters out of 5779009
+ 3157878 words of memory out of 5000000
+ 64529 multiletter control sequences out of 15000+600000
  486080 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,19n,84p,804b,2494s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfcc1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm0500.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on p90.pdf (8 pages, 1245130 bytes).
+Output written on p90.pdf (9 pages, 1850256 bytes).
 PDF statistics:
- 239 PDF objects out of 1000 (max. 8388607)
- 174 compressed objects within 2 object streams
- 44 named destinations out of 1000 (max. 500000)
- 23 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 252 PDF objects out of 1000 (max. 8388607)
+ 178 compressed objects within 2 object streams
+ 46 named destinations out of 1000 (max. 500000)
+ 43 words of extra memory for PDF output out of 10000 (max. 10000000)
