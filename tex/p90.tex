@@ -1,7 +1,8 @@
 \documentclass{report}
 
 \usepackage{amsmath,amssymb,amsfonts}
-\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
@@ -51,30 +52,164 @@
 
 % \tableofcontents
 
-\section*{Introduction}
+% \section*{Introduction}
 
 
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=0.99\textwidth]{figures/power_high_res_plot.png}
-    \caption{Uncertain power consumption of flexible demand portfolio, denoted by $p_{m}^{\text{B}}(\xi)$. The available capacity for bidding flexibility for a given time instance is illustrated as $p^{\text{cap},\downarrow}$ for down-regulation and $p^{\text{cap},\uparrow}$ for up-regulation. $P^{\text{Max}}$ and $P^{\text{Min}}$ is the  maximum and minimum power consumption of the portfolio, respectively.}
-    \label{fig:power}
-\end{figure}
+% \begin{figure}[!t]
+%     \centering
+%     \includegraphics[width=0.99\textwidth]{figures/power_high_res_plot.png}
+%     \caption{Uncertain power consumption of flexible demand portfolio, denoted by $p_{m}^{\text{B}}(\xi)$. The available capacity for bidding flexibility for a given time instance is illustrated as $p^{\text{cap},\downarrow}$ for down-regulation and $p^{\text{cap},\uparrow}$ for up-regulation. $P^{\text{Max}}$ and $P^{\text{Min}}$ is the  maximum and minimum power consumption of the portfolio, respectively.}
+%     \label{fig:power}
+% \end{figure}
 
-\begin{figure}[!t]
-    \centering
-    \input{figures/power_high_res_plot.tikz}
-    \caption{Uncertain power consumption of flexible demand portfolio, denoted by $p_{m}^{\text{B}}(\xi)$. The available capacity for bidding flexibility for a given time instance is illustrated as $p^{\text{cap},\downarrow}$ for down-regulation and $p^{\text{cap},\uparrow}$ for up-regulation. $P^{\text{Max}}$ and $P^{\text{Min}}$ is the  maximum and minimum power consumption of the portfolio, respectively.}
-    \label{fig:power}
-\end{figure}
+% \begin{figure}[!t]
+%     \centering
+%     \input{figures/power_high_res_plot.tikz}
+%     \caption{Uncertain power consumption of flexible demand portfolio, denoted by $p_{m}^{\text{B}}(\xi)$. The available capacity for bidding flexibility for a given time instance is illustrated as $p^{\text{cap},\downarrow}$ for down-regulation and $p^{\text{cap},\uparrow}$ for up-regulation. $P^{\text{Max}}$ and $P^{\text{Min}}$ is the  maximum and minimum power consumption of the portfolio, respectively.}
+%     \label{fig:power}
+% \end{figure}
 
-\noindent Abbreviations:
+% \noindent Abbreviations:
 
-\begin{itemize}
-    \item \textbf{C}hance \textbf{C}onstraint: \textbf{CC}
-    \item \textbf{J}oint \textbf{C}hance \textbf{C}onstraint: \textbf{JCC}
-    \item \textbf{D}istributionally \textbf{R}obust \textbf{J}oint \textbf{c}hance \textbf{c}onstraint: \textbf{DRJCC}
-\end{itemize}
+% \begin{itemize}
+%     \item \textbf{C}hance \textbf{C}onstraint: \textbf{CC}
+%     \item \textbf{J}oint \textbf{C}hance \textbf{C}onstraint: \textbf{JCC}
+%     \item \textbf{D}istributionally \textbf{R}obust \textbf{J}oint \textbf{c}hance \textbf{c}onstraint: \textbf{DRJCC}
+% \end{itemize}
+
+% \noindent Sets:
+
+% \begin{itemize}
+%     \item $\mathcal{H} = \{1, 2,  \ldots 24\}$
+%     \item $\mathcal{M} = \{1, 2,  \ldots 1440\}$
+%     \item $ \mathcal{M}_{h} = \{h \times 60 + m \mid m \in \{0, 1, 2, \ldots, 59\}\}$
+
+% \end{itemize}
+
+% \noindent Definitions:
+
+% \begin{definition}[Energinet's P90 rule \cite{energinet}]
+%     This means, that the participant's prognosis, which must be approved by Energinet, evaluates that the probability is 10\% that the sold capacity is not available. This entails that there is a 90\% chance that the sold capacity or more is available. This is when the prognosis is assumed to be correct.
+
+%     The probability is then also 10\%, that the entire sold capacity is not available. If this were to happen, it does not entail that the sold capacity is not available at all, however just that a part of the total capacity is not available. The available part will with high probability be close to the sold capacity.
+% \end{definition}
+
+
+% \noindent Problem \ref{P1} optimizes reserve capacity for a flexible demand (Figure \ref{fig:power}) such that there is at least a $1-\epsilon$ probability of fulfilling the P90 requirement from Energinet.
+
+% \begin{align}\label{P1}
+%     \max_{p_{h}^{\text{cap}, \uparrow}, p_{h}^{\text{cap}, \downarrow}} \quad & \sum_h \left( \lambda_h p_{h}^{\text{cap}, ,\uparrow} + \lambda_h p_{h}^{\text{cap},\downarrow} \right)                                                                                               \\
+%     \text{s.t.} \quad                                                         & \mathbb{P}  \left( p_{h}^{\text{cap}, \uparrow} \leq P_{m}^{\text{B}}(\xi) - P^{\text{Min}}, \quad \forall{h} \in \mathcal{H}, \forall{m} \in \mathcal{M}_{h}  \right)   & \geq 1 - \epsilon          \\
+%     & \mathbb{P}  \left( p_{h}^{\text{cap}, \downarrow} \leq P^{\text{Max}} - P_{m}^{\text{B}}(\xi), \quad \forall{h} \in \mathcal{H}, \forall{m} \in \mathcal{M}_{h}  \right) & \geq 1 - \epsilon          \\
+%     & p_{h}^{\text{cap},(.)} \leq P^{\text{Max}},                                                                                                                         & \forall{h} \in \mathcal{H} \\
+%     & p_{h}^{\text{cap},(.)} \geq 0,                                                                                                                              & \forall{h} \in \mathcal{H}
+% \end{align}
+
+% Here, we note that Problem \ref{P1} can be simplified by assuming symmetric flexibility, i.e., $p_{h}^{\text{cap},\downarrow} = p_{h}^{\text{cap},\uparrow} = p_{h}^{\text{cap}}$. Then the two JCCs are essentially the same since the uncertain power consumption, $P_{h}^{\text{B}}(\xi)$, is simply set to $P_{h}^{\text{B}}(\xi) \triangleq \min \{ P_{h}^{\text{B}}(\xi) - P^{\text{Min}}, P^{\text{Max}} - P_{h}^{\text{B}}(\xi) \}$.
+
+% Problem \ref{P1} can be simplified further by only considering each minute within that hour within one JCC (and omitting trivial constraints for bounding capacity for cleanness):
+
+% \begin{align}\label{P2}
+%     \max_{p_{h}^{\text{cap}}} \quad & \sum_h \lambda_h p_{h}^{\text{cap}}                                                                                                                             \\
+%     \text{s.t.} \quad               & \mathbb{P}  \left( p_{h}^{\text{cap}} \leq P_{m}^{\text{B}}(\xi), \quad \forall{m} \in \mathcal{M}_{h}  \right) \geq 1 - \epsilon, & \forall{h} \in \mathcal{H}
+% \end{align}
+
+% Problem \ref{P2} is now decomposed by hour and each hour can be solved in parallel to obtain $p_{h}^{\text{cap}}$, $\forall{h} \in \mathcal{H}$.
+
+% Doing so, the $h$ index can be removed and Problem \ref{P2} contains one JCC:
+
+% \begin{align}\label{P3}
+%     \max_{p^{\text{cap}}} \quad & \lambda p^{\text{cap}}                                                                                                             \\
+%     \text{s.t.} \quad           & \mathbb{P}  \left( p^{\text{cap}} \leq P_{m}^{\text{B}}(\xi), \quad \forall{m} \in \mathcal{M}_{h}  \right) \geq 1 - \epsilon &  &
+% \end{align}
+
+% The uncertainty, $\xi$, is seen in Figure \ref{fig:power} on the realized power consumption, $p_{m}^{\text{cap}}(\xi)$. To solve Problem \ref{P3}, we need to create a sample set  $p_{m}^{\text{cap}}(\xi)$ governed by $\mathbb{P}$ from either:
+
+% \begin{enumerate}
+%     \item Historical data
+%     \item A predictive forecast (e.g., quantile or probabilistic)
+% \end{enumerate}
+
+% We are interested in two methods for approximating the JCC in Problem \ref{P3}: (i) CVaR approximation and (ii) ALSO-X \cite{jiang2022also}.
+
+% \subsection*{CVaR}
+
+% \begin{align}\label{P4}
+%     \max_{p^{\text{cap}}} \quad & \lambda p^{\text{cap}}                                                                                                                \\
+%     \text{s.t.} \quad           & \mathbb{P}\text{-CVaR}_{1-\epsilon} \left( p^{\text{cap}} \leq P_{m}^{\text{B}}(\xi), \quad \forall{m} \in \mathcal{M}_{h}  \right) &
+% \end{align}
+
+% \subsection*{ALSO-X}
+
+% \begin{align}\label{P5}
+%     \max_{p^{\text{cap}}} \quad & \lambda p^{\text{cap}}                                                                                                       \\
+%     \text{s.t.} \quad           & \text{ALSO-X}_{1-\epsilon} \left( p^{\text{cap}} \leq P_{m}^{\text{B}}(\xi), \quad \forall{m} \in \mathcal{M}_{h}  \right) &
+% \end{align}
+
+% \section*{DRJCC}
+
+% In this section, we take a different approach. Converting Problem \ref{P3} to its distributionally robust counterpart, we get:
+
+% \begin{align}\label{PP1}
+%     \max_{p^{\text{cap}}} \quad & \lambda p^{\text{cap}}                                                                                                                                               \\
+%     \text{s.t.} \quad           & \min_{_{\mathbb{P} \in \mathcal{P}}}  \mathbb{P} \left( p^{\text{cap}} \leq P_{m}^{\text{B}}(\xi), \quad \forall{m} \in \mathcal{M}_{h}  \right) \geq 1 - \epsilon &
+% \end{align}
+
+% It is still possible to use CVaR and ALSO-X for Problem \ref{PP1} as it yields tractable, linear formulations \cite{ordoudis2021energy} for CVaR and ALSO-X \cite{jiang2023also}.
+
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[width=0.99\columnwidth]{figures/drjcc_raw.png}
+%     \caption{.}
+% \end{figure}
+
+% \begin{figure}[!t]
+%     \centering
+%     \input{figures/drjcc_is_oos_flex.tikz}
+%     \caption{some caption.}
+% \end{figure}
+
+% \begin{figure}[!t]
+%     \centering
+%     \input{figures/drjcc_bids.tikz}
+%     \caption{.}
+% \end{figure}
+
+% \begin{figure}[!t]
+%     \centering
+%     % \input{figures/drjcc_oos_histograms_ALSO-X.tikz}
+%     \includegraphics[width=0.99\columnwidth]{figures/drjcc_oos_histograms_ALSO-X.png}
+%     \caption{.}
+% \end{figure}
+
+% \begin{figure}[!t]
+%     \centering
+%     % \input{figures/drjcc_oos_histograms_CVaR.tikz}
+%     \includegraphics[width=0.99\columnwidth]{figures/drjcc_oos_histograms_CVaR.png}
+%     \caption{.}
+% \end{figure}
+
+% \begin{figure}[!t]
+%     \centering
+%     % \input{figures/drjcc_oos_histograms_DRJCC.tikz}
+%     \includegraphics[width=0.99\columnwidth]{figures/drjcc_oos_histograms_DRJCC.png}
+%     \caption{.}
+% \end{figure}
+
+% Write something
+
+% \begin{figure}[!t]
+%     \centering
+%     % \input{figures/heatmap.tikz} % OBS: does not work
+%     \includegraphics[width=0.99\columnwidth]{figures/heatmap.png}
+%     \caption{.}
+% \end{figure}
+
+\clearpage
+\newpage
+
+
+\section*{Equations}
 
 \noindent Sets:
 
@@ -82,6 +217,7 @@
     \item $\mathcal{H} = \{1, 2,  \ldots 24\}$
     \item $\mathcal{M} = \{1, 2,  \ldots 1440\}$
     \item $ \mathcal{M}_{h} = \{h \times 60 + m \mid m \in \{0, 1, 2, \ldots, 59\}\}$
+     \item $\mathcal{I} = \{1, 2, \ldots \thinspace \text{Number of samples} \}$
 
 \end{itemize}
 
@@ -93,120 +229,89 @@
     The probability is then also 10\%, that the entire sold capacity is not available. If this were to happen, it does not entail that the sold capacity is not available at all, however just that a part of the total capacity is not available. The available part will with high probability be close to the sold capacity.
 \end{definition}
 
+Simple optimization problem where bids, $p_{h}^{\text{cap}}$, must be adhere to uncertain available flexibility, $P_{m}^{\text{B}}(\xi)$.
 
-\noindent Problem \ref{P1} optimizes reserve capacity for a flexible demand (Figure \ref{fig:power}) such that there is at least a $1-\epsilon$ probability of fulfilling the P90 requirement from Energinet.
-
-\begin{align}\label{P1}
-    \max_{p_{h}^{\text{cap}, \uparrow}, p_{h}^{\text{cap}, \downarrow}} \quad & \sum_h \left( \lambda_h p_{h}^{\text{cap}, ,\uparrow} + \lambda_h p_{h}^{\text{cap},\downarrow} \right)                                                                                               \\
-    \text{s.t.} \quad                                                         & \mathbb{P}  \left( p_{h}^{\text{cap}, \uparrow} \leq P_{m}^{\text{B}}(\xi) - P^{\text{Min}}, \quad \forall{h} \in \mathcal{H}, \forall{m} \in \mathcal{M}_{h}  \right)   & \geq 1 - \epsilon          \\
-    & \mathbb{P}  \left( p_{h}^{\text{cap}, \downarrow} \leq P^{\text{Max}} - P_{m}^{\text{B}}(\xi), \quad \forall{h} \in \mathcal{H}, \forall{m} \in \mathcal{M}_{h}  \right) & \geq 1 - \epsilon          \\
-    & p_{h}^{\text{cap},(.)} \leq P^{\text{Max}},                                                                                                                         & \forall{h} \in \mathcal{H} \\
-    & p_{h}^{\text{cap},(.)} \geq 0,                                                                                                                              & \forall{h} \in \mathcal{H}
-\end{align}
-
-Here, we note that Problem \ref{P1} can be simplified by assuming symmetric flexibility, i.e., $p_{h}^{\text{cap},\downarrow} = p_{h}^{\text{cap},\uparrow} = p_{h}^{\text{cap}}$. Then the two JCCs are essentially the same since the uncertain power consumption, $P_{h}^{\text{B}}(\xi)$, is simply set to $P_{h}^{\text{B}}(\xi) \triangleq \min \{ P_{h}^{\text{B}}(\xi) - P^{\text{Min}}, P^{\text{Max}} - P_{h}^{\text{B}}(\xi) \}$.
-
-Problem \ref{P1} can be simplified further by only considering each minute within that hour within one JCC (and omitting trivial constraints for bounding capacity for cleanness):
-
-\begin{align}\label{P2}
-    \max_{p_{h}^{\text{cap}}} \quad & \sum_h \lambda_h p_{h}^{\text{cap}}                                                                                                                             \\
-    \text{s.t.} \quad               & \mathbb{P}  \left( p_{h}^{\text{cap}} \leq P_{m}^{\text{B}}(\xi), \quad \forall{m} \in \mathcal{M}_{h}  \right) \geq 1 - \epsilon, & \forall{h} \in \mathcal{H}
-\end{align}
-
-Problem \ref{P2} is now decomposed by hour and each hour can be solved in parallel to obtain $p_{h}^{\text{cap}}$, $\forall{h} \in \mathcal{H}$.
-
-Doing so, the $h$ index can be removed and Problem \ref{P2} contains one JCC:
-
-\begin{align}\label{P3}
-    \max_{p^{\text{cap}}} \quad & \lambda p^{\text{cap}}                                                                                                             \\
-    \text{s.t.} \quad           & \mathbb{P}  \left( p^{\text{cap}} \leq P_{m}^{\text{B}}(\xi), \quad \forall{m} \in \mathcal{M}_{h}  \right) \geq 1 - \epsilon &  &
-\end{align}
-
-The uncertainty, $\xi$, is seen in Figure \ref{fig:power} on the realized power consumption, $p_{m}^{\text{cap}}(\xi)$. To solve Problem \ref{P3}, we need to create a sample set  $p_{m}^{\text{cap}}(\xi)$ governed by $\mathbb{P}$ from either:
-
-\begin{enumerate}
-    \item Historical data
-    \item A predictive forecast (e.g., quantile or probabilistic)
-\end{enumerate}
-
-We are interested in two methods for approximating the JCC in Problem \ref{P3}: (i) CVaR approximation and (ii) ALSO-X \cite{jiang2022also}.
-
-\subsection*{CVaR}
-
-\begin{align}\label{P4}
-    \max_{p^{\text{cap}}} \quad & \lambda p^{\text{cap}}                                                                                                                \\
-    \text{s.t.} \quad           & \mathbb{P}\text{-CVaR}_{1-\epsilon} \left( p^{\text{cap}} \leq P_{m}^{\text{B}}(\xi), \quad \forall{m} \in \mathcal{M}_{h}  \right) &
-\end{align}
-
-\subsection*{ALSO-X}
-
-\begin{align}\label{P5}
-    \max_{p^{\text{cap}}} \quad & \lambda p^{\text{cap}}                                                                                                       \\
-    \text{s.t.} \quad           & \text{ALSO-X}_{1-\epsilon} \left( p^{\text{cap}} \leq P_{m}^{\text{B}}(\xi), \quad \forall{m} \in \mathcal{M}_{h}  \right) &
-\end{align}
+\begin{subequations}\label{P90:P1}
+    \begin{align}
+        \max_{p_{h}^{\text{cap}}} \quad & \sum_h \lambda_h p_{h}^{\text{cap}}                                                                                                                                                                                                     \\
+        \text{s.t.} \quad               & \mathbb{P}  \left( p_{h}^{\text{cap}} \leq P_{m}^{\text{B}}(\xi), \quad \forall{m} \in \mathcal{M}_{h},  \forall{h} \in \mathcal{H}  \right) \geq 1 - \epsilon \label{P90:p1:c}
+    \end{align}
+\end{subequations}
 
 \section*{DRJCC}
 
-In this section, we take a different approach. Converting Problem \ref{P3} to its distributionally robust counterpart, we get:
+Converting \eqref{P90:P1} to DRJCC for distributions within some ambiguity set defined by Wasserstein distance $\theta$:
 
-\begin{align}\label{PP1}
-    \max_{p^{\text{cap}}} \quad & \lambda p^{\text{cap}}                                                                                                                                               \\
-    \text{s.t.} \quad           & \min_{_{\mathbb{P} \in \mathcal{P}}}  \mathbb{P} \left( p^{\text{cap}} \leq P_{m}^{\text{B}}(\xi), \quad \forall{m} \in \mathcal{M}_{h}  \right) \geq 1 - \epsilon &
+\begin{subequations}\label{P90:P1:DRJCC}
+    \begin{align}
+        \max_{p_{h}^{\text{cap}}} \quad & \sum_h \lambda_h p_{h}^{\text{cap}}                                                                                                                                                                                                     \\
+        \text{s.t.} \quad               & \mathbb{P}  \left( p_{h}^{\text{cap}} \leq P_{m}^{\text{B}}(\xi), \quad \forall{m} \in \mathcal{M}_{h},  \forall{h} \in \mathcal{H}  \right) \geq 1 - \epsilon \quad \forall{\mathbb{P}} \in \mathcal{F}(\theta) \label{P90:p1:drjcc_c}
+    \end{align}
+\end{subequations}
+
+A tractable formulation of \eqref{P90:P1:DRJCC} is given by \cite[Proposition 2]{chen2022data}:
+
+\begin{subequations}\label{P90:P1:DRJCC-tract}
+\begin{align}
+    \max_{p_{h}^{\text{cap}}, q_i, s_i \geq 0, t} \quad & \sum_h \lambda_h p_{h}^{\text{cap}}                                                                                                                                    \\
+    \text{s.t.} \quad                                   & \epsilon |\mathcal{I}| t - \sum_{i \in \mathcal{I}} s_i \geq \theta |\mathcal{I}|                                                                                      \\
+                                                        & P_{m}^{\text{B}}(\xi_i) - p_{h}^{\text{cap}} + M\cdot q_i \geq t - s_i, \quad \forall{m} \in \mathcal{M}_{h},  \forall{h} \in \mathcal{H},  \forall{i} \in \mathcal{I} \\
+                                                        & M (1-q_i) \geq t - s_i                                                                                                                                                 \\
+                                                        & q_i \in \{0,1 \}, \quad \forall{i} \in \mathcal{I}
+\end{align}
+\end{subequations}
+
+
+Let the set of flexible demands be denoted by $d \in \{\mathcal{D} \}$. Then TSO profit is described by the following bi-level problem:
+
+\begin{subequations}
+    \begin{align}
+        \max_{\epsilon, \theta} \quad & \sum_h \lambda_h p_{h,d}^{\text{cap}} - \sum_h \sum_d \frac{1}{|\mathcal{I}|}\sum_i \nu_{h,i,d}                                                                                                                                                                                                      \\
+        \text{s.t.} \quad               & \text{Problem} \thinspace \eqref{P90:P1:DRJCC-tract}, \quad \forall{d} \\
+        & \nu_{h,i,d} = \left(p_{h,d}^{\text{cap}} - P_{m}^{\text{B}}(\xi_i) \right)^{+}, \quad \forall{i}, \forall{h}, \forall{d}
+    \end{align}
+\end{subequations}
+
+\section*{ALSO-X}
+
+Inspired by \cite{jiang2022also, porras2023integrating}, the reformulation of \eqref{P90:P1} is:
+
+\begin{align}\label{P90:P1:ALSO-X}
+    \max_{p_{h}^{\text{cap}}, y_{m,i} } \quad & \sum_h \lambda_h p_{h}^{\text{cap}}                                                                                                                                            \\
+    \text{s.t.} \quad                         & -(1-y_{m,i})M \leq  p_{h}^{\text{cap}} - P_{m}^{\text{B}}(\xi_i) \leq y_{m,i} M, \quad \forall{m} \in \mathcal{M}_{h},  \forall{h} \in \mathcal{H}, \forall{i} \in \mathcal{I} \\
+                                              & \sum_{i \in \mathcal{I}, m \in \mathcal{H}} y_{m,i} \leq q                                                                                                                     \\
+                                              & y_{m,i} \in \{0,1\}, \quad \forall{m} \in \mathcal{M}_{h},  \forall{h} \in \mathcal{H}, \forall{i} \in \mathcal{I}
 \end{align}
 
-It is still possible to use CVaR and ALSO-X for Problem \ref{PP1} as it yields tractable, linear formulations \cite{ordoudis2021energy} for CVaR and ALSO-X \cite{jiang2023also}.
+Here, $q = \lfloor  \epsilon \cdot |\mathcal{I}|  \cdot |\mathcal{M}| \rfloor $ and $y_{m,i}$ is a binary variable indicating an overbid in minute $m$ and sample $i$. The ALSO-X algorithm as listed in Algorithm \ref{alg:also_x} iteratively conducts an exponential search for the best value of $q$ such that the frequency of violations is less than $\epsilon$ by solving a relaxed version of \eqref{P90:P1:ALSO-X} with respect to $y_{m,i}$. Thus, ALSO-X does not consider the magnitude of violation - as opposed to CVaR - but only the frequency of violations. It is therefore expected that ALSO-X is less conservative than CVaR which was also the motivation behind its incarnation \cite{jiang2022also}.
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.99\columnwidth]{figures/drjcc_raw.png}
-    \caption{.}
-\end{figure}
+\begin{algorithm}
+    \caption{ALSO-X}
+    \label{alg:also_x} % This is the label for referencing
+    \begin{algorithmic}[1]
+        \Require Relax the integrality of $y$
+        Input: Stopping tolerance parameter $ \delta $
+        \State$ q \leftarrow 0, \bar{q} \leftarrow \lceil -\epsilon \rceil $
+        \While{ $ q \neq \bar{q} $ }
+        \State Set $ q_a \leftarrow (q + \bar{q})/2 $ and retrieve $ \Theta^* $ as an optimal solution to $ (4) $.
+        \State Set $ q \leftarrow q_a $ if $ P(y^* = 0) \geq 1 - \epsilon $; otherwise, $ \bar{q} \leftarrow q $
+        \EndWhile
+        Output: A feasible solution of model \eqref{P90:P1:ALSO-X}.
+    \end{algorithmic}
+\end{algorithm}
 
-\begin{figure}[!t]
-    \centering
-    \input{figures/drjcc_is_oos_flex.tikz}
-    \caption{some caption.}
-\end{figure}
+\section*{CVaR}
 
-\begin{figure}[!t]
-    \centering
-    \input{figures/drjcc_bids.tikz}
-    \caption{.}
-\end{figure}
+First, let $\mathcal{I}$ denote the number of samples for the empirical distribution. The CVaR formulation of the JCC in \eqref{P90:P1} is then \cite{jiang2022also}:
 
-\begin{figure}[!t]
-    \centering
-    % \input{figures/drjcc_oos_histograms_ALSO-X.tikz}
-    \includegraphics[width=0.99\columnwidth]{figures/drjcc_oos_histograms_ALSO-X.png}
-    \caption{.}
-\end{figure}
+\begin{align}\label{P90:P1:CVaR}
+    \max_{p_{h}^{\text{cap}}, \beta \geq 0, \zeta_{m,i}} \quad & \sum_h \lambda_h p_{h}^{\text{cap}}                                                                                                                          \\
+    \text{s.t.} \quad                                          & p_{h}^{\text{cap}} - P_{m}^{\text{B}}(\xi_i) \leq \zeta_{m,i}, \quad \forall{m} \in \mathcal{M}_{h},  \forall{h} \in \mathcal{H}, \forall{i} \in \mathcal{I} \\
+                                                               & \frac{1}{|\mathcal{M}|\cdot |\mathcal{I}|} \sum_{i \in \mathcal{I}, m \in \mathcal{H}} \zeta_{m,i} - (1-\epsilon)\cdot \beta \leq 0                          \\
+                                                               & \beta \leq  \zeta_{m,i}, \quad  \forall{m} \in \mathcal{M}_{h},  \forall{h} \in \mathcal{H}, \forall{i} \in \mathcal{I}
+\end{align}
 
-\begin{figure}[!t]
-    \centering
-    % \input{figures/drjcc_oos_histograms_CVaR.tikz}
-    \includegraphics[width=0.99\columnwidth]{figures/drjcc_oos_histograms_CVaR.png}
-    \caption{.}
-\end{figure}
-
-\begin{figure}[!t]
-    \centering
-    % \input{figures/drjcc_oos_histograms_DRJCC.tikz}
-    \includegraphics[width=0.99\columnwidth]{figures/drjcc_oos_histograms_DRJCC.png}
-    \caption{.}
-\end{figure}
-
-Write something
-
-\begin{figure}[!t]
-    \centering
-    % \input{figures/heatmap.tikz} % OBS: does not work
-    \includegraphics[width=0.99\columnwidth]{figures/heatmap.png}
-    \caption{.}
-\end{figure}
-
-Heatmap
-
-\section*{Number of samples required}
+The CVaR approximation in \eqref{P90:P1:CVaR} is a simple LP. The JCC is now approximated such that expected value of the $\epsilon$ worst samples and minutes is attenuated.
 
 \printbibliography
 

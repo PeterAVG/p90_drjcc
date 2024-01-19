@@ -17,11 +17,11 @@ from drjcc import run_drjcc
 from evaluate import evaluate
 from utils import _set_font_size
 
-SAVE_PLOT = False
+SAVE_PLOT = True
 P90_EPSILON = 0.10
 
-RUN_ALL_THREE = False
-RUN_BI_LEVEL = True
+RUN_ALL_THREE = True
+RUN_BI_LEVEL = False
 
 p_cap_opt, p_cap_opt2, p_cap_opt3, p_cap_opt4 = None, None, None, None  # type: ignore
 is_result, is_result2, is_result3, is_result4 = None, None, None, None  # type: ignore
@@ -161,6 +161,9 @@ plt.legend()
 plt.title("EV Charging Simulation")
 plt.xlim(0, setup.no_days)
 plt.grid(True)
+ax = plt.gca()
+_set_font_size(ax, misc=16, legend=14)
+plt.tight_layout()
 # NTOE: tikz takes up way too much memory with this plot...
 # tikzplotlib.save("tex/figures/drjcc_raw.tikz")
 if SAVE_PLOT:
@@ -194,8 +197,13 @@ ylim = max(
 ax[0].set_ylim(0, ylim * 1.1)
 ax[1].set_ylim(0, ylim * 1.1)
 
+_set_font_size(ax, misc=16, legend=14)
+plt.tight_layout()
+
 if SAVE_PLOT:
     tikzplotlib.save("tex/figures/drjcc_is_oos_flex.tikz", axis_width="0.49\\textwidth")
+    # save as png
+    plt.savefig("tex/figures/drjcc_is_oos_flex.png", dpi=300)
 plt.show()
 
 #%% # noqa
@@ -237,8 +245,13 @@ ylim = max(
 ax[0].set_ylim(0, ylim * 1.1)
 ax[1].set_ylim(0, ylim * 1.1)
 
+_set_font_size(ax, misc=16, legend=14)
+plt.tight_layout()
+
 if SAVE_PLOT:
     tikzplotlib.save("tex/figures/drjcc_bids.tikz", axis_width="0.49\\textwidth")
+    # also save as png
+    plt.savefig("tex/figures/drjcc_bids.png", dpi=300)
 
 #%% # noqa
 # create (3,4) table using Pandas showing revenue and penalty for each method, IS and OOS
@@ -382,6 +395,9 @@ for i, result in enumerate([oos_result, oos_result2, oos_result3]):
     _set_font_size(ax[i1], misc=16, legend=14)
     _set_font_size(ax[i1 + 1], misc=16, legend=14)
 
+    # tight
+    plt.tight_layout()
+
     if SAVE_PLOT:
         # NOTE: tikzplotlib can't convert legend as \draw commands does not have \addlegendentry
         # tikzplotlib.save(
@@ -435,6 +451,7 @@ ax.set_xticklabels(opt_instance.drjcc.theta_list)
 ax.set_yticklabels(EPSILON)
 # rotate xticks
 plt.setp(ax.get_xticklabels(), rotation=60, ha="right", rotation_mode="anchor")
+plt.tight_layout()
 
 # Interpretation of heatmap:
 # Low theta and high epsilon gives very low avaialble flexibility (obj value for TSO)

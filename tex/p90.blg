@@ -1,15 +1,17 @@
-[0] Config.pm:306> INFO - This is Biber 2.18
-[0] Config.pm:309> INFO - Logfile is 'p90.blg'
-[86] biber-darwin:340> INFO - === Wed Jan 17, 2024, 11:01:10
-[105] Biber.pm:418> INFO - Reading 'p90.bcf'
-[216] Biber.pm:978> INFO - Found 4 citekeys in bib section 0
-[233] Biber.pm:4401> INFO - Processing section 0
-[247] Biber.pm:4592> INFO - Looking for bibtex file 'bibliography/Bibliography.bib' for section 0
-[248] bibtex.pm:1713> INFO - LaTeX decoding ...
-[256] bibtex.pm:1518> INFO - Found BibTeX data source 'bibliography/Bibliography.bib'
-[311] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[311] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[311] Biber.pm:4221> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
-[311] Biber.pm:4227> INFO - No sort tailoring available for locale 'en-US'
-[320] bbl.pm:654> INFO - Writing 'p90.bbl' with encoding 'UTF-8'
-[322] bbl.pm:757> INFO - Output to p90.bbl
+[1] Config.pm:306> INFO - This is Biber 2.18
+[19] Config.pm:309> INFO - Logfile is 'p90.blg'
+[257] biber-darwin:340> INFO - === Fri Jan 19, 2024, 13:36:35
+[302] Biber.pm:418> INFO - Reading 'p90.bcf'
+[664] Biber.pm:978> INFO - Found 4 citekeys in bib section 0
+[721] Biber.pm:4401> INFO - Processing section 0
+[760] Biber.pm:4592> INFO - Looking for bibtex file 'bibliography/Bibliography.bib' for section 0
+[764] bibtex.pm:1713> INFO - LaTeX decoding ...
+[799] bibtex.pm:1518> INFO - Found BibTeX data source 'bibliography/Bibliography.bib'
+[990] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[991] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[996] Biber.pm:4221> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
+[996] Biber.pm:4227> INFO - No sort tailoring available for locale 'en-US'
+[1028] bbl.pm:654> INFO - Writing 'p90.bbl' with encoding 'UTF-8'
+[1040] bbl.pm:757> INFO - Output to p90.bbl
+[1040] Biber.pm:130> WARN - Duplicate entry key: 'jiang2022also' in file 'bibliography/Bibliography.bib', skipping ...
+[1041] Biber.pm:132> INFO - WARNINGS: 1

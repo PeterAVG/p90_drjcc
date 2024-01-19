@@ -19,6 +19,41 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global}
+    \entry{chen2022data}{article}{}
+      \name{author}{3}{}{%
+        {{hash=5c069394326941cace3c2b60358b9423}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Zhi},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=26016ea14a3620bdccc9b3365946677e}{%
+           family={Kuhn},
+           familyi={K\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod}}}%
+        {{hash=2efbc06f9556db49601540e9916613a0}{%
+           family={Wiesemann},
+           familyi={W\bibinitperiod},
+           given={Wolfram},
+           giveni={W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {INFORMS}%
+      }
+      \strng{namehash}{4e0cf46ec98f21a8218d66fa0ec4b11f}
+      \strng{fullhash}{4e0cf46ec98f21a8218d66fa0ec4b11f}
+      \strng{bibnamehash}{4e0cf46ec98f21a8218d66fa0ec4b11f}
+      \strng{authorbibnamehash}{4e0cf46ec98f21a8218d66fa0ec4b11f}
+      \strng{authornamehash}{4e0cf46ec98f21a8218d66fa0ec4b11f}
+      \strng{authorfullhash}{4e0cf46ec98f21a8218d66fa0ec4b11f}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Operations Research}
+      \field{title}{Data-driven chance constrained programs over Wasserstein balls}
+      \field{year}{2022}
+    \endentry
     \entry{energinet}{article}{}
       \field{sortinit}{E}
       \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
@@ -56,7 +91,6 @@
       \strng{authorbibnamehash}{19e22ae4f657ca11ace47378aa6ff7e6}
       \strng{authornamehash}{19e22ae4f657ca11ace47378aa6ff7e6}
       \strng{authorfullhash}{19e22ae4f657ca11ace47378aa6ff7e6}
-      \field{extraname}{1}
       \field{sortinit}{J}
       \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
       \field{labelnamesource}{author}
@@ -69,79 +103,43 @@
       \field{pages}{3581\bibrangedash 3600}
       \range{pages}{20}
     \endentry
-    \entry{jiang2023also}{article}{}
-      \name{author}{2}{}{%
-        {{hash=7468fad9969f4d0241aaf0ab47f42591}{%
-           family={Jiang},
-           familyi={J\bibinitperiod},
-           given={Nan},
-           giveni={N\bibinitperiod}}}%
-        {{hash=304e15714ce0c473635b8c4761b2689d}{%
-           family={Xie},
-           familyi={X\bibinitperiod},
-           given={Weijun},
-           giveni={W\bibinitperiod}}}%
-      }
-      \strng{namehash}{19e22ae4f657ca11ace47378aa6ff7e6}
-      \strng{fullhash}{19e22ae4f657ca11ace47378aa6ff7e6}
-      \strng{bibnamehash}{19e22ae4f657ca11ace47378aa6ff7e6}
-      \strng{authorbibnamehash}{19e22ae4f657ca11ace47378aa6ff7e6}
-      \strng{authornamehash}{19e22ae4f657ca11ace47378aa6ff7e6}
-      \strng{authorfullhash}{19e22ae4f657ca11ace47378aa6ff7e6}
-      \field{extraname}{2}
-      \field{sortinit}{J}
-      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{arXiv preprint arXiv:2302.01737}
-      \field{title}{ALSO-X\#: Better Convex Approximations for Distributionally Robust Chance Constrained Programs}
-      \field{year}{2023}
-    \endentry
-    \entry{ordoudis2021energy}{article}{}
+    \entry{porras2023integrating}{article}{}
       \name{author}{4}{}{%
-        {{hash=c6f5805246a5aa1dc58181b0bf11a089}{%
-           family={Ordoudis},
-           familyi={O\bibinitperiod},
-           given={Christos},
-           giveni={C\bibinitperiod}}}%
-        {{hash=9441f006decbc6be7528ac8379a6eba7}{%
-           family={Nguyen},
-           familyi={N\bibinitperiod},
-           given={Viet\bibnamedelima Anh},
-           giveni={V\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
-        {{hash=26016ea14a3620bdccc9b3365946677e}{%
-           family={Kuhn},
-           familyi={K\bibinitperiod},
-           given={Daniel},
-           giveni={D\bibinitperiod}}}%
-        {{hash=f868152a252ba8f399a537f3a95cf9f3}{%
-           family={Pinson},
+        {{hash=89924211e1d0461e96da8bc9bc6ce8f6}{%
+           family={Porras},
            familyi={P\bibinitperiod},
-           given={Pierre},
-           giveni={P\bibinitperiod}}}%
+           given={Álvaro},
+           giveni={Á\bibinitperiod}}}%
+        {{hash=1b87953629c58f81157d82fdca0d577a}{%
+           family={Roald},
+           familyi={R\bibinitperiod},
+           given={Line},
+           giveni={L\bibinitperiod}}}%
+        {{hash=6d0b8a7e1fc991d42d96c44ca4d6c75b}{%
+           family={Morales},
+           familyi={M\bibinitperiod},
+           given={Juan\bibnamedelima Miguel},
+           giveni={J\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=a3216c06ac0374b14b121f211ec9c564}{%
+           family={Pineda},
+           familyi={P\bibinitperiod},
+           given={Salvador},
+           giveni={S\bibinitperiod}}}%
       }
-      \list{publisher}{1}{%
-        {Elsevier}%
-      }
-      \strng{namehash}{f41ce1c13f4115bd85260f7c703ede6f}
-      \strng{fullhash}{69d69a20ae72b97cd3dbe77e81879fb5}
-      \strng{bibnamehash}{f41ce1c13f4115bd85260f7c703ede6f}
-      \strng{authorbibnamehash}{f41ce1c13f4115bd85260f7c703ede6f}
-      \strng{authornamehash}{f41ce1c13f4115bd85260f7c703ede6f}
-      \strng{authorfullhash}{69d69a20ae72b97cd3dbe77e81879fb5}
-      \field{sortinit}{O}
-      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
+      \strng{namehash}{995989506fb170ce2d5260742a415b7a}
+      \strng{fullhash}{d0ba00eb53356c405b6262b449de3f26}
+      \strng{bibnamehash}{995989506fb170ce2d5260742a415b7a}
+      \strng{authorbibnamehash}{995989506fb170ce2d5260742a415b7a}
+      \strng{authornamehash}{995989506fb170ce2d5260742a415b7a}
+      \strng{authorfullhash}{d0ba00eb53356c405b6262b449de3f26}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{Operations Research Letters}
-      \field{number}{3}
-      \field{title}{Energy and reserve dispatch with distributionally robust joint chance constraints}
-      \field{volume}{49}
-      \field{year}{2021}
-      \field{pages}{291\bibrangedash 299}
-      \range{pages}{9}
+      \field{journaltitle}{arXiv preprint arXiv:2303.05412}
+      \field{title}{Integrating Automatic and Manual Reserves in Optimal Power Flow via Chance Constraints}
+      \field{year}{2023}
     \endentry
   \enddatalist
 \endrefsection
 \endinput
-
