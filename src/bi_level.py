@@ -3,7 +3,8 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Tuple, cast
 
 import numpy as np
-from base import OptimizationInstance
+from base import IS_OOS_Enum, Method_Enum, OptimizationInstance
+from evaluate import evaluate
 from gurobipy import GRB, Model
 from utils import timing
 
@@ -235,7 +236,9 @@ def exponential_function(x: float) -> float:
 @timing()
 def run_bi_level(
     opt_instance: OptimizationInstance,
-) -> Tuple[np.ndarray, List[Dict[str, float]], LocalGurobiObject]:
+) -> Tuple[
+    np.ndarray, List[Dict[str, float]], List[Dict[str, float]], LocalGurobiObject
+]:
 
     theta_list = opt_instance.drjcc.theta_list
     no_samples = opt_instance.cv.no_samples
@@ -245,7 +248,8 @@ def run_bi_level(
         best_epsilon=EPSILON[0],
     )
 
-    grid_result = []
+    grid_result_is = []
+    grid_result_oos = []
 
     # perform grid-search over all thetas and epsilons
     for epsilon in EPSILON:
@@ -278,7 +282,7 @@ def run_bi_level(
                 and not (p_cap_opt_ <= 1).all()
                 and not (p_cap_opt_ < 0).any()
             ):
-                grid_result.append(
+                grid_result_is.append(
                     {
                         "theta": theta,
                         "epsilon": epsilon,
@@ -288,6 +292,35 @@ def run_bi_level(
                         "penalty": penalty,
                     }
                 )
+                # get corresponding OOS result
+                oos_result = evaluate(
+                    opt_instance,
+                    p_cap_opt_,
+                    is_oos=IS_OOS_Enum.OOS,
+                    method=Method_Enum.ALSO_X,
+                )
+                nu_sum_oos = (
+                    oos_result.violation.reshape(-1, 24, 60)
+                    .sum(axis=2)
+                    .mean(axis=0)
+                    .sum()
+                    / 60
+                )
+                violation_frequency = oos_result.freq
+                penalty_oos = exponential_function(violation_frequency)
+                outer_obj_oos = sum(p_cap_opt_) - nu_sum_oos * penalty_oos
+                outer_obj_oos = max(outer_obj_oos, 0)
+                grid_result_oos.append(
+                    {
+                        "theta": theta,
+                        "epsilon": epsilon,
+                        "outer_obj": outer_obj_oos,
+                        "p_cap_opt": p_cap_opt_,
+                        "nu": nu_sum_oos,
+                        "penalty": penalty_oos,
+                    }
+                )
+
             # check if this is the best solution AND it's not bogus...
             if (
                 outer_obj > local.best_outer_obj
@@ -324,4 +357,4 @@ def run_bi_level(
     print(f"Best q: {local.best_q}")  # type: ignore
     print(f"Best nu: {round(sum(local.best_nu) / 60 / no_samples,1)}")  # type: ignore
 
-    return local.best_p_cap_opt, grid_result, local
+    return local.best_p_cap_opt, grid_result_is, grid_result_oos, local

@@ -13,19 +13,20 @@ from data_generator import (
     draw_charging_events,
     generate_probability_vector,
 )
-from drjcc import run_drjcc
+from drjcc import run_drjcc, run_three_thetas
 from evaluate import evaluate
 from utils import _set_font_size
 
 SAVE_PLOT = True
 P90_EPSILON = 0.10
 
-RUN_ALL_THREE = True
-RUN_BI_LEVEL = False
+RUN_ALL_THREE = False
+RUN_THREE_THETA_RESULTS = False
+RUN_BI_LEVEL = True
 
-p_cap_opt, p_cap_opt2, p_cap_opt3, p_cap_opt4 = None, None, None, None  # type: ignore
-is_result, is_result2, is_result3, is_result4 = None, None, None, None  # type: ignore
-oos_result, oos_result2, oos_result3, oos_result4 = None, None, None, None  # type: ignore
+p_cap_opt, p_cap_opt2, p_cap_opt3, p_cap_opt4, p_cap_opt5 = None, None, None, None, None  # type: ignore
+is_result, is_result2, is_result3, is_result4, is_result5 = None, None, None, None, None  # type: ignore
+oos_result, oos_result2, oos_result3, oos_result4, oos_result5 = None, None, None, None, None  # type: ignore
 grid_result = None  # type: ignore
 
 setup = Setup(
@@ -115,9 +116,10 @@ if RUN_ALL_THREE:
     )
     print(f"Violation frequency OOS: {round(oos_result3.freq, 2)*100}%")
 
+
 if RUN_BI_LEVEL:
     ### Bi-level optimizatino problem using DRJCC ###
-    p_cap_opt4, grid_result, local_obj = run_bi_level(opt_instance)
+    p_cap_opt4, grid_result, grid_result_oos, _ = run_bi_level(opt_instance)
     # is_result4 = evaluate(
     #     opt_instance, p_cap_opt4, is_oos=IS_OOS_Enum.IS, method=Method_Enum.CVAR
     # )
@@ -125,6 +127,10 @@ if RUN_BI_LEVEL:
     #     opt_instance, p_cap_opt4, is_oos=IS_OOS_Enum.OOS, method=Method_Enum.CVAR
     # )
     # print(f"Violation frequency OOS: {round(oos_result4.freq, 2)*100}%")
+
+if RUN_THREE_THETA_RESULTS:
+    ### DRJCC for three thetas to show as a result ###
+    p_cap_opt5, grid_result = run_three_thetas(opt_instance)
 
 #%% # noqa
 
@@ -158,11 +164,11 @@ plt.axvspan(
 plt.xlabel("Days")
 plt.ylabel("kW")
 plt.legend()
-plt.title("EV Charging Simulation")
+# plt.title("EV Charging Simulation")
 plt.xlim(0, setup.no_days)
 plt.grid(True)
 ax = plt.gca()
-_set_font_size(ax, misc=16, legend=14)
+_set_font_size(ax, misc=16, legend=16)
 plt.tight_layout()
 # NTOE: tikz takes up way too much memory with this plot...
 # tikzplotlib.save("tex/figures/drjcc_raw.tikz")
@@ -252,6 +258,52 @@ if SAVE_PLOT:
     tikzplotlib.save("tex/figures/drjcc_bids.tikz", axis_width="0.49\\textwidth")
     # also save as png
     plt.savefig("tex/figures/drjcc_bids.png", dpi=300)
+
+#%% # noqa
+
+# create a plot that shows the mean empirical distribution for each hour with 10/90 percentiles
+f, ax = plt.subplots(1, 2, figsize=(12, 6))
+for i, _emp in zip(range(2), [emp, emp_oos]):
+    prfx = "IS" if i == 0 else "OOS"
+    x = np.arange(_emp.shape[1]) / 60
+    ax[i].plot(x, np.nanmean(_emp, axis=0))
+    # plot area between 10% and 90%
+    ax[i].fill_between(
+        x=x,
+        y1=np.nanpercentile(_emp, 10, axis=0),
+        y2=np.nanpercentile(_emp, 90, axis=0),
+        alpha=0.2,
+        # label=f"{prfx} 10-90\%",
+    )
+    # plot p_cap_opt
+    # write p_cap_opt as latex math
+    tx = r"$p^{\text{cap}}$"
+    if RUN_THREE_THETA_RESULTS:
+        for q, (theta, val) in enumerate(grid_result.items()):  # type: ignore
+            theta_tex = r"$\theta$" + "=" + str(theta)
+            p_cap_opt = p_cap_opt5[q, :]  # type: ignore
+            ax[i].plot(p_cap_opt, label=theta_tex, linestyle="--")
+    ax[i].set_xlabel("Hour of Day")
+    if i == 0:
+        ax[i].set_ylabel("kW")
+    # ax[i].set_title(f"{prfx} distribution of flexibility")
+    ax[i].grid(True)
+    ax[i].set_xlim(0, 23)
+    ax[i].legend()
+ylim = max(
+    max(np.nanpercentile(up_flex, 90, axis=0)),
+    max(np.nanpercentile(up_flex_oos, 90, axis=0)),
+)
+ax[0].set_ylim(0, ylim * 1.1)
+ax[1].set_ylim(0, ylim * 1.1)
+
+_set_font_size(ax, misc=16, legend=16)
+plt.tight_layout()
+
+if SAVE_PLOT:
+    tikzplotlib.save("tex/figures/drjcc_bids_paper.tikz", axis_width="0.49\\textwidth")
+    # also save as png
+    plt.savefig("tex/figures/drjcc_bids_paper.png", dpi=300)
 
 #%% # noqa
 # create (3,4) table using Pandas showing revenue and penalty for each method, IS and OOS
@@ -410,11 +462,13 @@ plt.show()
 
 #%% # noqa
 assert grid_result is not None
+assert grid_result_oos is not None
 
 
 epsilon_length = len(EPSILON)
 theta_length = len(opt_instance.drjcc.theta_list)
 matrix = np.full((epsilon_length, theta_length), np.nan)
+# for ele in grid_result_oos:
 for ele in grid_result:
     ep = ele["epsilon"]
     th = ele["theta"]
@@ -438,17 +492,22 @@ print(f"Optimal theta: {opt_instance.drjcc.theta_list[col_ix[0]]}")
 # plot a heatmap with epsilon on x-axis, theta on y-axis and outer_objective on z-axis
 f, ax = plt.subplots(1, 1, figsize=(6, 6))
 # use a colormap where dark is higher and light is lower
-cmap = plt.cm.get_cmap("viridis_r")
+cmap = plt.cm.get_cmap("viridis_r")  # type: ignore
 ax.imshow(matrix, cmap=cmap, interpolation="nearest")
 # colorbar
 cbar = ax.figure.colorbar(ax.imshow(matrix, cmap=cmap, interpolation="nearest"))
 cbar.ax.set_ylabel("Available flexibility [kW]", rotation=-90, va="bottom")
-ax.set_xlabel("Theta")
-ax.set_ylabel("Epsilon")
+ax.set_xlabel(r"$\theta$")
+ax.set_ylabel(r"$\epsilon$")
 ax.set_xticks(np.arange(theta_length))
 ax.set_yticks(np.arange(epsilon_length))
 ax.set_xticklabels(opt_instance.drjcc.theta_list)
 ax.set_yticklabels(EPSILON)
+for item in [
+    ax.xaxis.label,
+    ax.yaxis.label,
+]:  # + ax.get_xticklabels() + ax.get_yticklabels()
+    item.set_fontsize(14)
 # rotate xticks
 plt.setp(ax.get_xticklabels(), rotation=60, ha="right", rotation_mode="anchor")
 plt.tight_layout()
@@ -463,6 +522,6 @@ if SAVE_PLOT:
     #     "tex/figures/heatmap.tikz",
     #     axis_width="0.49\\textwidth",
     # )
-    plt.savefig("tex/figures/heatmap.png", dpi=300)
+    plt.savefig("tex/figures/heatmap.png", dpi=300, bbox_inches="tight")
 
-plt.show()
+# plt.show()
