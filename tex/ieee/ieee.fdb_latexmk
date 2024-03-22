@@ -1,16 +1,16 @@
 # Fdb version 3
-["bibtex ieee"] 1710760929 "ieee.aux" "ieee.bbl" "ieee" 1710760936
+["bibtex ieee"] 1710842374 "ieee.aux" "ieee.bbl" "ieee" 1710842556
   "../bibliography/Bibliography.bib" 1710760921 8167 ecae4de309a4ff31ac71aac57168b7c1 ""
   "/usr/local/texlive/2022/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1440712899 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "ieee.aux" 1710760935 16033 ce0906c45eba4b2567a864c30f5d499d "pdflatex"
+  "ieee.aux" 1710842555 16045 ea44a6c656bc908ea50c5cd2b3f50550 "pdflatex"
   (generated)
   "ieee.bbl"
   "ieee.blg"
-["pdflatex"] 1710760929 "/Users/petergade/Repositories/p90_drjcc/tex/ieee/ieee.tex" "ieee.pdf" "ieee" 1710760936
+["pdflatex"] 1710842548 "/Users/petergade/Repositories/p90_drjcc/tex/ieee/ieee.tex" "ieee.pdf" "ieee" 1710842556
   "../figures/drjcc_bids_paper.tikz" 1710620920 332515 ba9970339bb7672aeab73c2b96781075 ""
   "../figures/drjcc_raw.png" 1710620541 509592 b739167f800960f104e07c6b06956432 ""
   "../figures/heatmap.png" 1710745566 145090 dfa76cd14b1510f86e73f600bd43d94f ""
-  "/Users/petergade/Repositories/p90_drjcc/tex/ieee/ieee.tex" 1710760921 38588 f1f9d8d4089f6a2012d60bff5a68d1b7 ""
+  "/Users/petergade/Repositories/p90_drjcc/tex/ieee/ieee.tex" 1710842548 38599 e008a70889973eb51b23fbd80e14e464 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/adobe/times/ptmb7t.tfm" 1136768653 2172 fd0c924230362ff848a33632ed45dc23 ""
@@ -286,10 +286,10 @@
   "/usr/local/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1663245152 3059190 c1683d7e34f5380c43d33ad9e508bc92 ""
   "/usr/local/texlive/2022/texmf.cnf" 1663245050 577 209b46be99c9075fd74d4c0369380e8c ""
   "IEEEtran.cls" 1710760921 281786 6728957f298086dedcfad85b7a6811a7 ""
-  "ieee.aux" 1710760935 16033 ce0906c45eba4b2567a864c30f5d499d "pdflatex"
-  "ieee.bbl" 1710760929 5748 f3c8a91da6d8cd2242f98e3f8e30b457 "bibtex ieee"
-  "ieee.out" 1710760935 2386 c5ba218c5b12576be51be9c5ee51ea46 "pdflatex"
-  "ieee.tex" 1710760921 38588 f1f9d8d4089f6a2012d60bff5a68d1b7 ""
+  "ieee.aux" 1710842555 16045 ea44a6c656bc908ea50c5cd2b3f50550 "pdflatex"
+  "ieee.bbl" 1710842375 5748 f3c8a91da6d8cd2242f98e3f8e30b457 "bibtex ieee"
+  "ieee.out" 1710842555 2385 010973087dff0d116cab59a71d5b4118 "pdflatex"
+  "ieee.tex" 1710842548 38599 e008a70889973eb51b23fbd80e14e464 ""
   (generated)
   "ieee.aux"
   "ieee.log"
