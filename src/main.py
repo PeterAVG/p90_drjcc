@@ -1,4 +1,4 @@
-#%% # noqa
+# %% # noqa
 import matplotlib.pyplot as plt
 import numpy as np
 import tikzplotlib
@@ -17,12 +17,12 @@ from drjcc import run_drjcc, run_three_thetas
 from evaluate import evaluate
 from utils import _set_font_size
 
-SAVE_PLOT = True
+SAVE_PLOT = False
 P90_EPSILON = 0.10
 
 RUN_ALL_THREE = False
 RUN_THREE_THETA_RESULTS = False
-RUN_BI_LEVEL = True
+RUN_BI_LEVEL = False
 
 p_cap_opt, p_cap_opt2, p_cap_opt3, p_cap_opt4, p_cap_opt5 = None, None, None, None, None  # type: ignore
 is_result, is_result2, is_result3, is_result4, is_result5 = None, None, None, None, None  # type: ignore
@@ -132,13 +132,14 @@ if RUN_THREE_THETA_RESULTS:
     ### DRJCC for three thetas to show as a result ###
     p_cap_opt5, grid_result = run_three_thetas(opt_instance)
 
-#%% # noqa
+# %% # noqa
 
 # Plotting
 x = np.arange(setup.total_time) / (setup.no_hours_per_day * setup.no_minutes_per_hour)
 # x = np.arange(total_time) / (no_minutes_per_hour)
 plt.figure(figsize=(10, 6))
-plt.plot(x, opt_instance.aggregate_kw)
+# plt.plot(x, opt_instance.aggregate_kw)
+plt.plot(x, np.nansum(opt_instance.ev_kw[: opt_instance.cv.no_ev_samples], axis=0))
 # highligt in-sample and out-of-sample periods
 plt.axvspan(
     0,
@@ -212,7 +213,7 @@ if SAVE_PLOT:
     plt.savefig("tex/figures/drjcc_is_oos_flex.png", dpi=300)
 plt.show()
 
-#%% # noqa
+# %% # noqa
 
 # create a plot that shows the mean empirical distribution for each hour with 10/90 percentiles
 f, ax = plt.subplots(1, 2, figsize=(12, 6))
@@ -259,7 +260,7 @@ if SAVE_PLOT:
     # also save as png
     plt.savefig("tex/figures/drjcc_bids.png", dpi=300)
 
-#%% # noqa
+# %% # noqa
 
 # create a plot that shows the mean empirical distribution for each hour with 10/90 percentiles
 f, ax = plt.subplots(1, 2, figsize=(12, 6))
@@ -305,7 +306,7 @@ if SAVE_PLOT:
     # also save as png
     plt.savefig("tex/figures/drjcc_bids_paper.png", dpi=300)
 
-#%% # noqa
+# %% # noqa
 # create (3,4) table using Pandas showing revenue and penalty for each method, IS and OOS
 # is_days = cv.no_is_days(setup)
 # oos_days = cv.no_oos_days(setup)
@@ -460,7 +461,7 @@ for i, result in enumerate([oos_result, oos_result2, oos_result3]):
 
 plt.show()
 
-#%% # noqa
+# %% # noqa
 assert grid_result is not None
 assert grid_result_oos is not None
 
