@@ -87,12 +87,15 @@
 \thispagestyle{plain}
 \pagestyle{plain}
 \begin{abstract}
-    Stochastic flexible resources can now offer their capacity to Nordic ancillary services under a new regulation that addresses their stochastic nature. In this work, we show how aggregators can exploit the market regulations by generalizing the rule in a mathematical representation that is distributionally robust with respect to their uncertain offering capacity. A tractable formulation is provided in the form of a MILP, and it is agnostic to the underlying technology offering its flexibility. We show how a TSO can maximize its available flexible capacity using a bi-level optimization problem where the inner problem represents the aggregators' profit maximization. This is illustrated in a simulated case study of an aggregator with a portfolio of electric vehicles. 
+The $\rm{P90}$ rule of the Danish transmission system operator, Energinet, incentivizes flexible resources with stochastic power consumption/production baseline to bid in Nordic ancillary service markets, letting them cause reserve shortfall up to a certain occurrence frequency over a time period. Leveraging this rule, we develop a distributionally robust joint chance-constrained optimization model for an aggregator of flexible loads to optimize the volume of reserve capacity to be offered. We show how distributional robustness is key for the aggregator when it bids in a non-stationary uncertain environment. We also develop a heuristic based on a grid search for the system operator to adjust the $\rm{P90}$ rule and the level of conservativeness, aiming to procure the maximum reserve capacity from stochastic resources with least expected shortfall.  
+%Stochastic flexible resources can now offer their capacity to Nordic ancillary services under a new regulation that addresses their stochastic nature. In this work, we show how aggregators can exploit the market regulations by generalizing the rule in a mathematical representation that is distributionally robust with respect to their uncertain offering capacity. A tractable formulation is provided in the form of a MILP, and it is agnostic to the underlying technology offering its flexibility. We show how a TSO can maximize its available flexible capacity using a bi-level optimization problem where the inner problem represents the aggregators' profit maximization. This is illustrated in a simulated case study of an aggregator with a portfolio of electric vehicles. 
 \end{abstract}
+
+\vspace{2mm}
 
 \begin{IEEEkeywords}
     % Synergy effect, demand-side flexibility, EV-chargers, joint chance constraints, ancillary services
-    Distributionally robust optimization, Joint chance-constraints, ancillary services
+     Stochastic flexible resources, ancillary services, bidding strategy, distributionally robust joint chance-constrained optimization
 \end{IEEEkeywords}
 
 
@@ -178,15 +181,15 @@
 \end{acronym}
 
 
-\vspace{3mm}
+\vspace{2mm}
 \section{Introduction}\label{sec:Introduction}
 \vspace{-1mm}
 
 
 % \ac{DRJCC} for CCH EVs Nordic ancillary service markets. Focus is not on P90 or EV/technology
 
-Flexible resources with stochastic production or demand have the capability to balance the power grid. Examples of such assets are  wind turbines in the supply side and electric vehicles and heat pumps in the demand side. However, their stochastic nature is a barrier to become ancillary service providers like other conventional units. In this work, we show how Nordic ancillary service market rules naturally allow for bidding flexible resources, which can be mathematically represented as a \ac{DRJCCP}. From the  perspective of flexibility aggregators, the proposed methodology is general, meaning it can be exploited for optimal bidding decisions irrespective of the type and technology of  assets in their portfolio. %We show how aggregators with stochastic assets can optimally bid in Nordic ancillary service markets. 
-In addition, we take the perspective of a \ac{TSO} and present a trade-off between increased  supply of ancillary services from stochastic resources and uncertainty of delivery. 
+Flexible resources with stochastic electric power production or consumption have the capability to balance the power grid. Examples of such assets are  wind turbines in the supply side and electric vehicles and heat pumps in the demand side. However, their stochastic nature is a barrier to become ancillary service providers like other conventional units. We show how Nordic ancillary service market rules naturally allow such  resources to bid their flexibility. For that, we develop a bidding decision-making problem for a portfolio of flexible resources, mathematically represented as a  \ac{DRJCCP}, optimizing the volume of reserve capacity to be offered. From the  perspective of flexibility aggregators, the proposed methodology is general, meaning it can be exploited for optimal bidding decisions irrespective of the type and technology of  assets in their portfolio. %We show how aggregators with stochastic assets can optimally bid in Nordic ancillary service markets. 
+In addition, we take the perspective of a \ac{TSO} and present a trade-off between increased  supply of ancillary services from stochastic flexible resources and uncertainty of delivery. 
 %This is of a particular interest for the \ac{TSO}, while from an aggregator perspective, the methodology generalizes bidding as being either distributionally robust or empirically robust.
 
 %\footnote{For the remainder of this paper, we refer to an aggregator as any entity that offers flexible capacity from at least one technology or asset into some ancillary service. Aggregator is thus used interchangeably with flexible provider.}
@@ -194,11 +197,11 @@ In addition, we take the perspective of a \ac{TSO} and present a trade-off betwe
 \vspace{2mm}
 \subsection{Background: Nordic ancillary service market rules}\label{sec:background}
 \vspace{-1mm}
-Nordic ancillary service markets are being developed to incentivize stochastic flexible resources to offer their capacity. This is mainly due to two reasons: First, the Nordic power grid is undergoing a rapid transition with less fossil-fuel based generation and more intermittent generation from wind and solar power, thus stressing the power grid. Second, the demand for flexible capacity from the Nordic \acp{TSO} has increased with a particular focus on flexibility procurement from green technologies, e.g., batteries, renewables, and flexible demands. Therefore, the Danish \ac{TSO}, Energinet, has recently published an innovative regulation, called the $\rm{P90}$ rule, which specifically addresses how such stochastic flexible resources should offer their capacity into Nordic ancillary service markets.
+Nordic ancillary service markets are being developed to incentivize stochastic flexible resources to offer their capacity. This is mainly due to two reasons: First, the Nordic power grid is undergoing a rapid transition with less fossil-fuel based generation and more intermittent generation from wind and solar power, thus stressing the power grid. Second, the demand for flexible capacity from the Nordic \acp{TSO} has increased with a particular focus on flexibility procurement from green technologies, e.g., batteries, renewables, and flexible demands. The Danish \ac{TSO}, Energinet, has recently published an innovative regulation, called the $\rm{P90}$ rule, which specifically addresses how such stochastic flexible resources should offer their capacity into Nordic ancillary service markets.
 
-The $\rm{P90}$ rule addresses the stochastic nature of  flexible resources with respect to their unknown future flexible capacity. Currently, bidding for Nordic ancillary services generally occurs in the day-ahead stage when the \ac{TSO} books a certain amount of reserves \cite{energinet}. The stochastic resources do not necessarily know with certainty their baseline power consumption/production 12-36 hours in advance. Hence, Energinet allows for a violation of bids with the maximum rate of 10\%. Interchangeably, one can call it allowing for overbidding or for reserve shortfall with the maximum frequency of 10\%. The detailed definition of $\rm{P90}$ rule will be provided later in the paper. 
+The $\rm{P90}$ rule takes into account the stochastic nature of  flexible resources with respect to their unknown future flexible capacity. Currently, bidding to Nordic ancillary service markets generally occurs in the day-ahead stage when the \ac{TSO} books a certain amount of reserves \cite{energinet}. Stochastic resources do not necessarily know with certainty their baseline power consumption/production 12-36 hours in advance. Hence, Energinet allows for a violation of bids with the maximum rate of 10\%. This means that Energinet allows for reserve shortfall (also called overbidding) with the maximum frequency of 10\%. Energinet may check ex-post the realized frequency of reserve shortfall during a certain time period. In case it goes beyond the allowed threshold, the flexibility provider may lose its qualification to bid in the market, and therefore should go through again the pre-qualification process of Energinet. A detailed definition of $\rm{P90}$ rule will be provided later in the following section. 
 
-This rule naturally leads to a mathematical formulation for optimally offering flexible capacity using a chance-constrained program. For example, an aggregator can exploit this rule to its advantage by maximizing profits within the allowed violation range. However, this might not be in the aggregator's or the \ac{TSO}'s best interest as shown later. Any mis-specification of the aggregator's empirical distribution for offering  capacity might cause a violation of the $\rm{P90}$ rule and result in less available flexible capacity for the \ac{TSO} in reality. We therefore investigate how a distributionally robust representation of the $\rm{P90}$ rule can benefit aggregators when bidding capacity, while the \ac{TSO} can use this information to assess how well the $\rm{P90}$ rule functions. For distributional robustness, we use the Wasserstein distance as a metric to represent a given \textit{conservativeness} when offering flexible capacity.
+This rule naturally leads to a mathematical formulation for optimally offering flexible capacity using a chance-constrained program. An aggregator can exploit this rule to its advantage by maximizing profits within the allowed violation range. However, this might not be in the aggregator's or the \ac{TSO}'s best interest as shown later. Any mis-specification of the aggregator's empirical distribution for offering  capacity might cause a violation of the $\rm{P90}$ rule and result in less available flexible capacity for the \ac{TSO} in reality. We therefore investigate how a distributionally robust representation of the $\rm{P90}$ rule can benefit aggregators when bidding capacity, while the \ac{TSO} can use this information to assess how well the $\rm{P90}$ rule functions. For distributional robustness, we use the Wasserstein distance as a metric to represent a given \textit{conservativeness} when offering flexible capacity.
 
 \vspace{2mm}
 \subsection{Research questions and our contributions}
@@ -210,7 +213,9 @@ how the $\rm{P90}$ rule and the conservativeness of aggregators impact the total
 
 To answer the first question from an aggregator's perspective, we formulate a bidding problem as a \ac{DRJCCP}, complying to the $\rm{P90}$ rule, with the objective of profit maximization.  
 As an example of a stochastic flexible resource, we consider a portfolio of \acp{EV}, whose consumption  is stochastic. We do not consider the option of EVs injecting to the grid, but rather adjusting their consumption level up and down when charging. 
-Note that the proposed formulation can be applied to any other types of stochastic flexible resources. The monetary value of offering Nordic ancillary services at different conservativeness levels is demonstrated by adjusting the Wasserstein distance. In particular, we show how the conservativeness level directly impacts the aggregator's security of supply in a non-stationary environment.
+Note that the proposed formulation can be applied to any other types of stochastic flexible resources. 
+%The monetary value of offering Nordic ancillary services at different conservativeness levels is demonstrated by adjusting the Wasserstein distance. In particular, 
+We show how the conservativeness level directly impacts the aggregator's security of supply in a non-stationary environment.
 
 To answer the second question from a TSO's perspective, we show how a trade-off exists between increased supply of flexibility  and uncertainty of delivery. The find an optimal trade-off, we develop a bi-level optimization problem where the outer problem represents the \ac{TSO} setting the rules in terms of allowed rate of shortfall reserve and conservativeness level. The inner problem represents an aggregator maximizing its profit using the proposed \ac{DRJCCP}. Thus, we assume the \ac{TSO} is able to not only adjust the $\rm{P90}$ rule, but also demand stochastic flexible resources to consider a  certain level of conservativeness for robustness when offering their flexibility.
 
@@ -261,7 +266,7 @@ We now show how the interpretation of the $\rm{P90}$ rule naturally leads to an 
 \subsection{Bidding problem of an aggregator}
 \vspace{-1mm}
 Hereafter, without loss of generality, we consider a flexibility aggregator in the demand side, where upward flexibility can be obtained by a decrease in consumption. To embed Definition \ref{def:P90} in an optimization problem, we consider the aggregator maximizes its profit by offering flexible capacity into a Nordic ancillary service market with an hourly resolution:
-
+%
 \begin{subequations}\label{P90:General}
     \begin{align}
     & \max_{p_{h}^{\text{cap}}} \quad  \sum_h \lambda_h \ p_{h}^{\text{cap}} \label{P90:General:obj}                                                                                                                                               \\
@@ -281,7 +286,7 @@ The sole uncertainty lies in the forecast for the stochastic baseline power cons
 The general way to solve (joint) chance-constrained programs like \eqref{P90:General} is to generate \textit{samples} of $P_{m}^{\text{B}}$ by utilizing either historical data or a predictive distribution. Regardless of the method chosen, the resultant distribution may not accurately represent the true underlying uncertainty of the future power baseline. Consequently, the objective in this work is \textit{not} to generate the most representative sample set or predictions of $P_{m}^{\text{B}}$, but rather to identify optimal decisions based on a \textit{given} sample set, addressing any potential mis-specification of the sample set.
 %
 Therefore, instead of assuming a single empirical distribution in \eqref{P90:General}, we define an ambiguity set of distributions within some distance to the empirical distribution. To do this, inspired by \cite{chen2022data}, we exploit the well-known type-1 Wasserstein distance between two distributions, defined as
-
+%
 \begin{align}\label{was}
     d_{\mathrm{W}}\left(\mathbb{P}_1, \mathbb{P}_2\right)=\inf _{\mathbb{P} \in \mathcal{P}\left(\mathbb{P}_1, \mathbb{P}_2\right)} \mathbb{E}_{\mathbb{P}}\left[\left\|\tilde{\boldsymbol{\xi}}_1-\tilde{\boldsymbol{\xi}}_2\right\|\right],
 \end{align}
@@ -420,24 +425,25 @@ for other technologies as well, e.g., for wind and solar power units or aggregat
 \begin{figure}[!t]
     \centering
     \includegraphics[width=0.95\columnwidth]{../figures/heatmap.png}
-    \caption{\small{\ac{TSO} flexibility procurement for given $\epsilon$ and $\theta$. Each $(\epsilon, \theta)$ has been solved using \eqref{P90:TSO} in a grid search on \ac{IS} data (see \ref{sec:sim-setup}). The optimal value is $(\epsilon, \theta) = (0.28, 0.5)$. }}
+    \caption{\small{Reserve capacity procurement of the \ac{TSO} for different values of $\epsilon$ and $\theta$. Each $(\epsilon, \theta)$ has been solved using \eqref{P90:TSO} using a grid search on in-sample data. The optimal value obtained by this grid search heuristic is $(\epsilon, \theta) = (0.28, 0.5)$. }}
     \label{fig:tso}
 \end{figure}
 
 
 \vspace{2mm}
-\subsection{\ac{TSO} flexibility procurement}\label{sec:motivation}
+\subsection{Reserve capacity procurement by the \ac{TSO}}\label{sec:motivation}
 \vspace{-1mm}
-Figure \ref{fig:tso} shows the \ac{TSO} procurement for different values of $\epsilon$ and $\theta$ when solving \eqref{P90:TSO}. First of all, it is clearly seen how a high $\epsilon$, (i.e., a high violation frequency) only yields more available flexibility for the \ac{TSO} if $\theta$ is also high. This is due to $\nu$ in \eqref{P90:TSO} which penalizes lack of realized capacity. Interestingly, one can also clearly see a path of optimal $(\epsilon, \theta)$ starting from $(0.01, 0.01)$ to $(0.28, 0.05)$. This demonstrates that bid violations for high $\epsilon$ can be compensated by more conservative decision making while maintaining a high capacity procurement for the \ac{TSO}.
+Fig. \ref{fig:tso} shows the amount of reserve capacity procurement of the \ac{TSO} for different values of $\epsilon$ and $\theta$ when solving \eqref{P90:TSO}. The main observation is that a high $\epsilon$, i.e., allowing a high frequency of reserve shortfall, yields more available flexibility for the \ac{TSO} \textit{only if} $\theta$ is also high. This is due to the variable $\nu$ in \eqref{P90:TSO} which penalizes the reserve shortfall. Interestingly, we also observe a path of optimal $(\epsilon, \theta)$ starting from $(0.01, 0.01)$ to $(0.28, 0.05)$. This demonstrates that reserve shortfall for high $\epsilon$ can be compensated by more conservative decision making while maintaining a high reserve capacity procurement for the \ac{TSO}.
 
 
 \vspace{2mm}
 \section{Conclusion}
 \vspace{-1mm}
-This paper illustrated how stochastic flexible resources can participate in Nordic ancillary service markets using a \ac{DRJCCP} for offering capacity. We showed how a tractable formulation of the \ac{DRJCC} formulation allows for more robust bidding in non-stationary environments of the uncertain baseline power consumption. Furthermore, the perspective of the \ac{TSO} was also investigated with respect to its capacity procurement from such flexible resources. It was shown how an increased violation frequency, i.e., P90 level, should be offset by a corresponding increase in conservativeness of bidding using the measure of the Wasserstein distance in the \ac{DRJCC}. These findings were exemplified using a simulated case study of an aggregator of \acp{EV} bidding their flexibility into an ancillary service with negligible energy delivery.
+Given the $\rm{P90}$ rule of Energinet, this paper illustrated how stochastic flexible resources can participate in Nordic ancillary service markets using a \ac{DRJCCP} for offering reserve capacity. We showed how a tractable formulation of the model allows for more robust bidding in non-stationary environments of the uncertain baseline power consumption. Furthermore, the perspective of the \ac{TSO} was investigated with respect to its reserve capacity procurement from such stochastic flexible resources. It was shown how an increased allowance for the frequency of reserve shortfall should be offset by a corresponding increase in conservativeness of bidding using the measure of the Wasserstein distance in the \ac{DRJCCP}. These findings were exemplified using a simulated case study of an aggregator of \acp{EV} bidding their flexibility into an ancillary service with negligible energy delivery.
 
-For future work, it is of great interest to investigate the impact of a heterogenous portfolio of stochastic flexible resources with respect to \ac{TSO} procurement. As such, one could expect that flexible resources of different technology also respond differently when the \ac{TSO} prescribe violation frequencies and conservativeness. Moreover, our \ac{TSO} procurement in this work ignored prices, both for bids but also penalty prices for lack of capacity that was promised. Both are important from a system and societal perspective and should be included in future work. Lastly, an increase in supply of flexible resources lowers prices as well which will be offset by more uncertain supply. This trade-off is very interesting from a \ac{TSO} perspective, and should be studied further.
+For future work, it is of great interest to investigate the impact of a heterogeneous portfolio of stochastic flexible resources with respect to \ac{TSO} procurement. As such, one could expect that flexible resources of different technology also respond differently when the \ac{TSO} prescribes allowed shortfall frequency and conservativeness. Moreover, the \ac{TSO} procurement model in this work ignores prices for ancillary services and penalty prices for reserve shortfall. Both are important from a system and societal perspective and should be included in future work. Lastly, an increase in the volume of flexible resources bidding in ancillary service markets lowers prices which will be offset by more uncertain supply. This trade-off is very interesting from a \ac{TSO} perspective, and should be  further studied.
 
+\vspace{2mm}
 
 % \section*{Acknowledgement}
 
