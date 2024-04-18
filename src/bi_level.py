@@ -266,9 +266,10 @@ def run_bi_level(
                 continue
 
             p_cap_opt_, nu, q = local.get_var_values()
-            nu_sum = nu.reshape(no_samples, 24, -1).sum(axis=2).mean(axis=0).sum() / 60
-            penalty = exponential_function(sum(q) / no_samples)
-            outer_obj = sum(p_cap_opt_) - nu_sum * penalty
+            nu_sum = nu.reshape(no_samples, 24, -1).sum(axis=2).sum(axis=1).mean()
+            penalty = 0
+            outer_obj = sum(p_cap_opt_) - nu_sum  # - nu_sum * penalty
+            assert sum(p_cap_opt_) >= nu_sum
             print(f"nu: {nu_sum}, outer obj: {outer_obj}")
 
             # save result if it's not bogus
@@ -306,8 +307,7 @@ def run_bi_level(
                     .sum()
                     / 60
                 )
-                violation_frequency = oos_result.freq
-                penalty_oos = exponential_function(violation_frequency)
+                penalty_oos = 0
                 outer_obj_oos = sum(p_cap_opt_) - nu_sum_oos * penalty_oos
                 outer_obj_oos = max(outer_obj_oos, 0)
                 grid_result_oos.append(

@@ -22,7 +22,7 @@ P90_EPSILON = 0.10
 
 RUN_ALL_THREE = False
 RUN_THREE_THETA_RESULTS = False
-RUN_BI_LEVEL = False
+RUN_BI_LEVEL = True
 
 p_cap_opt, p_cap_opt2, p_cap_opt3, p_cap_opt4, p_cap_opt5 = None, None, None, None, None  # type: ignore
 is_result, is_result2, is_result3, is_result4, is_result5 = None, None, None, None, None  # type: ignore
@@ -486,7 +486,7 @@ print(matrix.shape)
 print(np.nanmax(matrix))
 # get row index and col index for max value
 row_ix, col_ix = np.where(matrix == np.nanmax(matrix))
-assert np.isclose(np.nanmax(matrix), matrix[row_ix, col_ix])
+assert np.isclose(np.nanmax(matrix), matrix[row_ix, col_ix]).all()
 print(f"Optimal epsilon: {EPSILON[row_ix[0]]}")
 print(f"Optimal theta: {opt_instance.drjcc.theta_list[col_ix[0]]}")
 
@@ -497,7 +497,9 @@ cmap = plt.cm.get_cmap("viridis_r")  # type: ignore
 ax.imshow(matrix, cmap=cmap, interpolation="nearest")
 # colorbar
 cbar = ax.figure.colorbar(ax.imshow(matrix, cmap=cmap, interpolation="nearest"))
-cbar.ax.set_ylabel("Available flexibility [kW]", rotation=-90, va="bottom")
+cbar.ax.set_ylabel(
+    "Total flexibility procured during a day [kW]", rotation=-90, va="bottom"
+)
 ax.set_xlabel(r"$\theta$")
 ax.set_ylabel(r"$\epsilon$")
 ax.set_xticks(np.arange(theta_length))
