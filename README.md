@@ -1,11 +1,9 @@
 # p90
 
-$$
-\begin{align*}
-\min_x \quad & \sum_h A_h \rho_h^{chp} \\
-\text{s.t.} \quad & \sum_h \left( \rho_h^{chp} \right) \leq \overline{\rho^{(S)}},
-& \forall h \quad \rho_h \geq 1 - \epsilon
-\end{align*}
-$$
+This code is used for the paper called "Distributionally Robust Chance-Constrained Optimization for Bidding Flexible Resources in Nordic Ancillary Service Markets".
+
+To install the python environment, run `make dev-setup`. NOTE: poetry is used as a package manager and python 3.11 is used. I suggest installing python 3.11 with pyenv.
+
+To run all experiments, run `python src/main.py`. In the top of the file, variables with capital letters control which experiments to run.
 
 
