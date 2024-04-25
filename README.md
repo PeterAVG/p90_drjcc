@@ -1,5 +1,3 @@
-# p90
-
 This code is used for the paper called "Leveraging P90 Requirement: Flexible Resources Bidding in Nordic Ancillary Service Markets". 
 
 Arxiv link: https://arxiv.org/abs/2404.12807
