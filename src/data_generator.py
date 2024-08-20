@@ -2,8 +2,9 @@ from typing import Tuple
 
 import numba
 import numpy as np
-from base import CrossValidator, IS_OOS_Enum, Setup
-from utils import timing
+
+from src.base import CrossValidator, IS_OOS_Enum, Setup
+from src.utils import timing
 
 
 def generate_probability_vector(rng: np.random.Generator) -> np.ndarray:

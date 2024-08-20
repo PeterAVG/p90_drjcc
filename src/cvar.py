@@ -2,9 +2,10 @@ from dataclasses import dataclass
 from typing import cast
 
 import numpy as np
-from base import OptimizationInstance
 from gurobipy import GRB, Model
-from utils import timing
+
+from src.base import OptimizationInstance
+from src.utils import timing
 
 
 @dataclass

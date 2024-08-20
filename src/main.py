@@ -2,27 +2,34 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import tikzplotlib
-from also_x import run_also_x
-from base import CrossValidator, IS_OOS_Enum, Method_Enum, OptimizationInstance, Setup
-from bi_level import EPSILON, run_bi_level
-from cvar import run_cvar
-from data_generator import (
+
+from src.also_x import run_also_x
+from src.base import (
+    CrossValidator,
+    IS_OOS_Enum,
+    Method_Enum,
+    OptimizationInstance,
+    Setup,
+)
+from src.bi_level import EPSILON, run_bi_level
+from src.cvar import run_cvar
+from src.data_generator import (
     compute_ev_consumption,
     create_emprical_distribution,
     create_oos_distribution,
     draw_charging_events,
     generate_probability_vector,
 )
-from drjcc import run_drjcc, run_three_thetas
-from evaluate import evaluate
-from utils import _set_font_size
+from src.drjcc import run_drjcc, run_three_thetas
+from src.evaluate import evaluate
+from src.utils import _set_font_size
 
 SAVE_PLOT = False
 P90_EPSILON = 0.10
 
-RUN_ALL_THREE = False
+RUN_ALL_THREE = True
 RUN_THREE_THETA_RESULTS = False
-RUN_BI_LEVEL = True
+RUN_BI_LEVEL = False
 
 p_cap_opt, p_cap_opt2, p_cap_opt3, p_cap_opt4, p_cap_opt5 = None, None, None, None, None  # type: ignore
 is_result, is_result2, is_result3, is_result4, is_result5 = None, None, None, None, None  # type: ignore
@@ -445,19 +452,19 @@ for i, result in enumerate([oos_result, oos_result2, oos_result3]):
         plt.sca(ax_)
         plt.xticks(rotation=45)
 
-    _set_font_size(ax[i1], misc=16, legend=14)
-    _set_font_size(ax[i1 + 1], misc=16, legend=14)
+    _set_font_size(ax[i1], misc=16, legend=20)
+    _set_font_size(ax[i1 + 1], misc=16, legend=20)
 
     # tight
     plt.tight_layout()
 
-    if SAVE_PLOT:
-        # NOTE: tikzplotlib can't convert legend as \draw commands does not have \addlegendentry
-        # tikzplotlib.save(
-        #     f"tex/figures/drjcc_oos_histograms_{method}.tikz",
-        #     axis_width="0.49\\textwidth",
-        # )
-        plt.savefig(f"tex/figures/drjcc_oos_histograms_{method}.png", dpi=300)
+    # if SAVE_PLOT:
+    # NOTE: tikzplotlib can't convert legend as \draw commands does not have \addlegendentry
+    # tikzplotlib.save(
+    #     f"tex/figures/drjcc_oos_histograms_{method}.tikz",
+    #     axis_width="0.49\\textwidth",
+    # )
+    plt.savefig(f"tex/figures/drjcc_oos_histograms_{method}.png", dpi=300)
 
 plt.show()
 

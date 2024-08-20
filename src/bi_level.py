@@ -3,10 +3,11 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Tuple, cast
 
 import numpy as np
-from base import IS_OOS_Enum, Method_Enum, OptimizationInstance
-from evaluate import evaluate
 from gurobipy import GRB, Model
-from utils import timing
+
+from src.base import IS_OOS_Enum, Method_Enum, OptimizationInstance
+from src.evaluate import evaluate
+from src.utils import timing
 
 EPSILON = list(round(x, 2) for x in np.arange(0.01, 0.31, 0.01))
 # EPSILON = list(round(x, 2) for x in np.arange(0.05, 0.16, 0.01))

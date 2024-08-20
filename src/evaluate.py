@@ -1,5 +1,6 @@
 import numpy as np
-from base import IS_OOS_Enum, Method_Enum, OptimizationInstance, Result
+
+from src.base import IS_OOS_Enum, Method_Enum, OptimizationInstance, Result
 
 
 def evaluate(
